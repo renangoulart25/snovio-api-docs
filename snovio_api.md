@@ -7096,8 +7096,6 @@ A resposta retorna uma coleção de modelos de webhook. Listamos as propriedades
 | success | boolean | Indica se o webhook foi removido |
 
 
-## Referência
-
 ### Moedas
 
 <!-- reference:Currencies -->

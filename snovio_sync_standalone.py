@@ -52,6 +52,7 @@ HTTP_VERBS = ("POST", "GET", "PATCH", "PUT", "DELETE")
 
 HERE = Path(__file__).resolve().parent
 MD_PATH = HERE / "snovio_api.md"
+DOCS_DIR = HERE / "docs"
 MANIFEST_PATH = HERE / "snovio_api.manifest.json"
 CHANGELOG_PATH = HERE / "snovio_api.CHANGELOG.md"
 
@@ -261,13 +262,39 @@ def build(html):
             label = f"{ep['verb'] or ''} {ep['name']}".strip()
             parts.append(f"##### {label}\n\n<!-- endpoint:{sid} -->\n\n{ep['body']}\n")
             manifest["endpoints"][sid] = {"verb": ep["verb"], "name": ep["name"], "hash": _sha(ep["body"])}
-    parts.append("## Referência\n")
+    modules = {}
+    intro_auth = f"# Visão Geral e Autenticação - API Snov.io\n\n> Espelho gerado de [{SOURCE_URL}]({SOURCE_URL}) em {today}.\n\n## Introdução\n\n{parse_section(soup, 'Introduction')}\n\n## Autenticação\n\n{parse_section(soup, 'Authentification')}\n"
+    modules["00_intro_autenticacao.md"] = intro_auth
+
+    for idx, (group, ids) in enumerate(GROUPS, 1):
+        g_slug = _slug(group)
+        g_parts = [f"# {group} - API Snov.io\n", f"> Espelho gerado de [{SOURCE_URL}]({SOURCE_URL}) em {today}.\n\n"]
+        for sid in ids:
+            if sid in SUBGROUP_IDS:
+                el = soup.find(id=sid)
+                if el:
+                    h = el.find(["h3", "h4"])
+                    if h:
+                        g_parts.append(f"## {_clean(h.get_text(' ', strip=True))}\n\n")
+                continue
+            ep = parse_endpoint(soup, sid)
+            if not ep:
+                continue
+            label = f"{ep['verb'] or ''} {ep['name']}".strip()
+            g_parts.append(f"### {label}\n\n<!-- endpoint:{sid} -->\n\n{ep['body']}\n\n")
+            manifest["endpoints"][sid] = {"verb": ep["verb"], "name": ep["name"], "hash": _sha(ep["body"])}
+        modules[f"{idx:02d}_{g_slug}.md"] = "".join(g_parts).rstrip() + "\n"
+
+    ref_parts = [f"# Referência - API Snov.io\n", f"> Espelho gerado de [{SOURCE_URL}]({SOURCE_URL}) em {today}.\n\n"]
     for sid, label in REFERENCE_SECTIONS:
         body = parse_section(soup, sid)
         if body:
             parts.append(f"### {label}\n\n<!-- reference:{sid} -->\n\n{body}\n")
+            ref_parts.append(f"## {label}\n\n<!-- reference:{sid} -->\n\n{body}\n\n")
             manifest["endpoints"][f"ref:{sid}"] = {"verb": None, "name": label, "hash": _sha(body)}
-    return "\n".join(parts).rstrip() + "\n", manifest
+    modules["99_referencia.md"] = "".join(ref_parts).rstrip() + "\n"
+
+    return "\n".join(parts).rstrip() + "\n", manifest, modules
 
 
 def diff_manifests(old, new):
@@ -310,7 +337,7 @@ def main(argv=None):
     except Exception as e:
         print("ERRO ao obter HTML:", e, file=sys.stderr)
         return 1
-    md, manifest = build(html)
+    md, manifest, modules = build(html)
     old = json.loads(MANIFEST_PATH.read_text(encoding="utf-8")) if MANIFEST_PATH.exists() else {}
     add, rem, mod = diff_manifests(old, manifest)
     changed = bool(add or rem or mod)
@@ -329,8 +356,11 @@ def main(argv=None):
     print("=" * 60)
     if a.check:
         return 10 if changed else 0
-    if changed or first:
+    if changed or first or not DOCS_DIR.exists():
         MD_PATH.write_text(md, encoding="utf-8")
+        DOCS_DIR.mkdir(parents=True, exist_ok=True)
+        for fname, content in modules.items():
+            (DOCS_DIR / fname).write_text(content, encoding="utf-8")
         MANIFEST_PATH.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
         if changed and not first:
             write_changelog(add, rem, mod, old, manifest)

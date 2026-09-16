@@ -46,13 +46,30 @@ POST https://api.snov.io/v1/oauth/access_token
 
 ## 🔄 Automated Update & Sync
 
+### Re-sync Documentation
 To re-sync and check for changes in the official documentation:
 
-```bash
-python snovio_sync_standalone.py
+```powershell
+py snovio_sync_standalone.py
 ```
 
-If changes are detected, a changelog entry will automatically be logged.
+### Knowledge Graph (Graphify)
+To update the documentation and regenerate the interactive knowledge graph:
+
+```powershell
+.\update_graph.ps1
+```
+
+Or run and immediately open the interactive graph in your default browser:
+
+```powershell
+.\update_graph.ps1 -OpenBrowser
+```
+
+Generated Graph Artifacts:
+- **`graphify-out/graph.html`**: Interactive HTML knowledge graph visualization.
+- **`graphify-out/GRAPH_REPORT.md`**: Community cluster analysis and God Nodes report.
+- **`graphify-out/graph.json`**: GraphRAG-ready indexed graph.
 
 ---
 

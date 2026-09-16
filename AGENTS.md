@@ -1,6 +1,6 @@
 # Instruções para Agentes de IA (AGENTS.md)
 
-Este documento orienta agentes de IA (Claude, Antigravity, Copilot, Cursor, etc.) sobre o propósito, a arquitetura e as regras operacionais deste repositório.
+Este documento orienta agentes de IA (Claude, Antigravity, Copilot, Cursor, etc.) sobre a engenharia, arquitetura, ambiente e regras operacionais deste repositório.
 
 ---
 
@@ -30,29 +30,46 @@ O objetivo principal é fornecer contexto de alta fidelidade e baixo consumo de 
 
 ---
 
+## 🗣️ Comunicação e Escopo (Herdado de D:\AGENTS.md)
+
+- **Comunicação Direta (BLUF - Bottom Line Up Front)**: Apresentar o resultado e sua implicação primeiro. Expor detalhes técnicos apenas quando ajudarem a avaliar a conclusão ou executar o próximo passo.
+- **Tom Objetivo**: Responder em português brasileiro com clareza e objetividade. Evitar introduções genéricas, bajulações ou confirmações prolixas.
+- **Evidências vs Suposições**: Distinguir fatos verificados, hipóteses e recomendações. Citar as fontes ou evidências que sustentam conclusões relevantes.
+- **Concluir com Suficiência**: Encerrar quando o objetivo autorizado estiver atendido. Não executar ações adicionais redundantes nem imprimir retornos extensos sem necessidade.
+
+---
+
+## 💻 Ambiente Windows & Execução de Shell
+
+- **Shell Ativa**: O ambiente de execução é o PowerShell no Windows 11. **Nunca prefixe comandos desnecessariamente com `powershell`** (ex: use `.\update_graph.ps1` ou `py run_graphify.py` diretamente).
+- **Interpretador Python**: O comando `python` pode cair no shim da Microsoft Store. **Sempre invoque o interpretador via `py` ou `py -3`**.
+- **Codificação UTF-8**: O console do Windows pode operar em CP850/OEM. Scripts e comandos que leiam ou escrevam arquivos Markdown/JSON devem explicitar `encoding="utf-8"`.
+- **Tratamento de Saída**: Nunca faça dumps de arquivos gigantescos no terminal. Empregue projeções, contagem de linhas (`len()`), filtros ou trechos delimitados para preservar o contexto.
+
+---
+
 ## ⚙️ Regras e Diretrizes para Agentes
 
 ### 1. Zero PHP
 - **Nunca reintroduza trechos ou exemplos de código PHP**.
-- Toda a documentação e os scripts devem manter apenas requisições HTTP REST canônicas, esquemas JSON e exemplos em **Python**.
+- Toda a documentação gerada e os scripts devem manter apenas requisições HTTP REST canônicas, esquemas JSON e exemplos em **Python**.
 
-### 2. Sincronização e Integridade
-- Se for solicitado verificar atualizações da Snov.io:
+### 2. Sincronização e Integridade Incremental
+- Para sincronizar com a página oficial da Snov.io:
   ```powershell
   py snovio_sync_standalone.py
   ```
 - O script calcula hashes SHA-256 contra o `snovio_api.manifest.json`. Se houver alterações na documentação da Snov.io, ele atualiza automaticamente o `snovio_api.md`, a pasta `docs/` e grava as mudanças no `snovio_api.CHANGELOG.md`.
 
-### 3. Atualização do Grafo de Conhecimento
+### 3. Atualização do Grafo de Conhecimento (Graphify)
 - Após qualquer alteração ou ressincronização da documentação, o grafo deve ser regenerado:
   ```powershell
   py run_graphify.py
   ```
-- Ou localmente via PowerShell:
-  ```powershell
-  .\update_graph.ps1
-  ```
+  *(Ou localmente via `.\update_graph.ps1` ou `.\update_graph.ps1 -OpenBrowser`)*.
 
-### 4. Git & Commits
-- Arquivos temporários do Graphify (`graphify-out/.*`, `graphify-out/cache/`) e scripts PowerShell (`*.ps1`) devem permanecer ignorados no `.gitignore`.
+### 4. Segurança de Credenciais & Repositório Público
+- A conta de referência é `renangoulart25`. O repositório [snovio-api-docs](https://github.com/renangoulart25/snovio-api-docs) é **público**.
+- **Nunca exponha credenciais reais** (tokens de acesso, client_secrets privados ou chaves API) em commits, logs ou artefatos gerados. Manter apenas os dados canônicos/fictícios de documentação da Snov.io.
+- Arquivos temporários do Graphify (`graphify-out/.*`, `graphify-out/cache/`) e scripts utilitários PowerShell (`*.ps1`) devem permanecer ignorados no `.gitignore`.
 - Ao comitar, mantenha mensagens convencionais (`feat:`, `chore:`, `docs:`, `perf:`).

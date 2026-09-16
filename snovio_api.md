@@ -30,37 +30,6 @@ Você precisa gerar um token de acesso para autenticar solicitações futuras. A
 
 **Exemplos de código**
 
-```php
-<?php
-function getAccessToken()
-{
-    $params = [
-        'grant_type'    => 'client_credentials',
-        'client_id'     => 'c57a0459f6t141659ea75cccb393c5111',
-        'client_secret' => '77cbf92b71553e85ce3bfd505214f40b'
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v1/oauth/access_token',
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => $params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-
-    return $res['access_token'];
-
-}
-?>
-```
-
 ```python
 def get_access_token():
 params = {
@@ -199,42 +168,6 @@ Enter a domain name and Snov.io will return company info, emails and prospect pr
 
 **Exemplos de código**
 
-```php
-<?php
-function companyInfoSearch()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'domain' => 'snov.io',
-        'webhook_url' => 'https://hooks.yourdomain.com',
-    ];
-    $headers = [
-        'Authorization: Bearer ' . $token,
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/domain-search/start',
-        CURLOPT_HTTPHEADER     => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => $params,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
-
 ```python
 def company_info_search():
 token = get_access_token()
@@ -280,37 +213,6 @@ return json.loads(res.text)
 `GET` `https://api.snov.io/v2/domain-search/result/{task_hash}`
 
 **Exemplos de código**
-
-```php
-<?php
-function companyInfoResult()
-{
-    $token = getAccessToken();
-
-    $task_hash = 'b10e4c47693dbf87cc8de16edcc8ae22';
-    $headers = [
-        'Authorization: Bearer ' . $token,
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/domain-search/result/$task_hash',
-        CURLOPT_HTTPHEADER     => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
 
 ```python
 def company_info_result():
@@ -398,45 +300,6 @@ return json.loads(res.text)
 
 **Exemplos de código**
 
-```php
-<?php
-function prospectsSearch()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'domain'       => 'snov.io',
-        'page'         => 1,
-        'positions'    => ['Web developer','QA Engineer'],
-        'webhook_url'  => 'https://hooks.yourdomain.com'
-    ];
-
-    $headers = [
-        'Authorization: Bearer ' . $token,
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/domain-search/prospects/start',
-        CURLOPT_HTTPHEADER     => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => http_build_query($params),
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
-
 ```python
 def prospects_search():
 token = get_access_token()
@@ -493,37 +356,6 @@ return json.loads(res.text)
 `GET` `https://api.snov.io/v2/domain-search/prospects/result/{task_hash}`
 
 **Exemplos de código**
-
-```php
-<?php
-function prospectsResult()
-{
-    $token = getAccessToken();
-
-    $task_hash = '3384369c16aad810f58609a40ad65089';
-    $headers = [
-        'Authorization: Bearer ' . $token,
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/domain-search/prospects/result/$task_hash',
-        CURLOPT_HTTPHEADER     => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
 
 ```python
 def prospects_result():
@@ -594,42 +426,6 @@ return json.loads(res.text)
 
 **Exemplos de código**
 
-```php
-<?php
-function searchProspectEmailsStart()
-{
-    $token = getAccessToken();
-
-    $headers = [
-        'Authorization: Bearer ' . $token,
-    ];
-    $task = '41627edbfff8ba9c0819a1aa51d232baf3fa1763e5813dc86e027ccbbefd7a16b0522391086776b8764c94d02bab1257df392';
-    $params = [
-        'webhook_url' => 'https://hooks.yourdomain.com',
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/domain-search/prospects/search-emails/start/$task',
-        CURLOPT_HTTPHEADER     => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => $params,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
-
 ```python
 def search_prospect_emails_start():
 token = get_access_token()
@@ -673,37 +469,6 @@ return json.loads(res.text)
 `GET` `https://api.snov.io/v2/domain-search/prospects/search-emails/result/{task_hash}`
 
 **Exemplos de código**
-
-```php
-<?php
-function searchProspectEmailsResult()
-{
-    $token = getAccessToken();
-
-    $task_hash = '5e846a1d80d95f66cfb30250a7c1881f';
-    $headers = [
-        'Authorization: Bearer ' . $token,
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/domain-search/prospects/search-emails/result/$task_hash',
-        CURLOPT_HTTPHEADER     => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
 
 ```python
 def search_prospect_emails_result():
@@ -762,42 +527,6 @@ return json.loads(res.text)
 
 **Exemplos de código**
 
-```php
-<?php
-function domainEmailsSearch()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'domain' => 'snov.io',
-        'webhook_url' => 'https://hooks.yourdomain.com',
-    ];
-    $headers = [
-        'Authorization: Bearer ' . $token,
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/domain-search/domain-emails/start',
-        CURLOPT_HTTPHEADER     => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => $params,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
-
 ```python
 def domain_emails_search():
 token = get_access_token()
@@ -847,37 +576,6 @@ return json.loads(res.text)
 `GET` `https://api.snov.io/v2/domain-search/domain-emails/result/{task_hash}`
 
 **Exemplos de código**
-
-```php
-<?php
-function domainEmailsResult()
-{
-    $token = getAccessToken();
-
-    $task_hash = '36fce9ac2667a827f6c5ab954e288bed';
-    $headers = [
-        'Authorization: Bearer ' . $token,
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/domain-search/domain-emails/result/$task_hash',
-        CURLOPT_HTTPHEADER     => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
 
 ```python
 def domain_emails_result():
@@ -944,42 +642,6 @@ return json.loads(res.text)
 
 **Exemplos de código**
 
-```php
-<?php
-function genericContactsSearch()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'domain' => 'snov.io',
-        'webhook_url' => 'https://hooks.yourdomain.com',
-    ];
-    $headers = [
-        'Authorization: Bearer ' . $token,
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/domain-search/generic-contacts/start',
-        CURLOPT_HTTPHEADER     => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => $params,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
-
 ```python
 def generic_contacts_search():
 token = get_access_token()
@@ -1029,37 +691,6 @@ return json.loads(res.text)
 `GET` `https://api.snov.io/v2/domain-search/generic-contacts/result/{task_hash}`
 
 **Exemplos de código**
-
-```php
-<?php
-function genericContactsResult()
-{
-    $token = getAccessToken();
-
-    $task_hash = '0e36e43b9b91a9b20d14b82c1ee141f2';
-    $headers = [
-        'Authorization: Bearer ' . $token,
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/domain-search/generic-contacts/result/$task_hash',
-        CURLOPT_HTTPHEADER     => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
 
 ```python
 def generic_contacts_result():
@@ -1171,50 +802,6 @@ Pesquise prospects e empresas no banco de dados. Use filtros para refinar sua bu
 
 **Exemplos de código**
 
-```php
-<?php
-function prospectsSearch()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'access_token' => $token,
-        'page' => 1,
-        'webhook_url' => 'https://hooks.yourdomain.com',
-        'filters' => [
-            'prospect' => [
-                'first_name' => 'John',
-                'last_name' => 'Doe',
-            ],
-            'company' => [
-                'name' => [
-                    'include' => ['Snov.io']
-                ],
-            ],
-        ],
-    ];
-
-    $options = [
-        CURLOPT_URL => 'https://api.snov.io/v2/database-search/prospects/start?' . http_build_query($params),
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => $params,
-        CURLOPT_FOLLOWLOCATION => true,
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
-
 ```python
 def prospects_search():
     token = get_access_token()
@@ -1274,37 +861,6 @@ def prospects_search():
 `GET` `https://api.snov.io/v2/database-search/prospects/result/{task_hash}`
 
 **Exemplos de código**
-
-```php
-<?php
-function prospectsResult()
-{
-    $token = getAccessToken();
-
-    $task_hash = '3384369c16aad810f58609a40ad65089';
-
-    $params = [
-        'access_token' => $token,
-    ];
-
-    $options = [
-        CURLOPT_URL => "https://api.snov.io/v2/database-search/prospects/result/$task_hash?" . http_build_query($params),
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
 
 ```python
 def prospects_result():
@@ -1392,39 +948,6 @@ def prospects_result():
 
 **Exemplos de código**
 
-```php
-<?php
-function searchProspectEmailsStart()
-{
-    $token = getAccessToken();
-
-    $task_hash = '5e846a1d80d95f66cfb30250a7c1881f';
-
-    $params = [
-        'access_token' => $token,
-    ];
-
-    $options = [
-        CURLOPT_URL => "https://api.snov.io/v2/database-search/prospects/search-emails/start/$task_hash?" . http_build_query($params),
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => $params,
-        CURLOPT_FOLLOWLOCATION => true,
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
-
 ```python
 def search_prospect_emails_start():
     token = get_access_token()
@@ -1470,37 +993,6 @@ def search_prospect_emails_start():
 `GET` `https://api.snov.io/v2/database-search/prospects/search-emails/result/{task_hash}`
 
 **Exemplos de código**
-
-```php
-<?php
-function searchProspectEmailsResult()
-{
-    $token = getAccessToken();
-
-    $task_hash = '5e846a1d80d95f66cfb30250a7c1881f';
-
-    $params = [
-        'access_token' => $token,
-    ];
-
-    $options = [
-        CURLOPT_URL => "https://api.snov.io/v2/database-search/prospects/search-emails/result/$task_hash?" . http_build_query($params),
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
 
 ```python
 def search_prospect_emails_result():
@@ -1588,46 +1080,6 @@ def search_prospect_emails_result():
 
 **Exemplos de código**
 
-```php
-<?php
-function companiesSearch()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'access_token' => $token,
-        'page' => 1,
-        'webhook_url' => 'https://hooks.yourdomain.com',
-        'filters' => [
-            'company' => [
-                'name' => [
-                    'include' => ['Snov.io']
-                ],
-            ],
-        ],
-    ];
-
-    $options = [
-        CURLOPT_URL => 'https://api.snov.io/v2/database-search/companies/start?' . http_build_query($params),
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => $params,
-        CURLOPT_FOLLOWLOCATION => true,
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
-
 ```python
 def companies_search():
     token = get_access_token()
@@ -1683,37 +1135,6 @@ def companies_search():
 `GET` `https://api.snov.io/v2/database-search/companies/result/{task_hash}`
 
 **Exemplos de código**
-
-```php
-<?php
-function companiesResult()
-{
-    $token = getAccessToken();
-
-    $task_hash = '3384369c16aad810f58609a40ad65089';
-
-    $params = [
-        'access_token' => $token,
-    ];
-
-    $options = [
-        CURLOPT_URL => "https://api.snov.io/v2/database-search/companies/result/$task_hash?" . http_build_query($params),
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
 
 ```python
 def companies_result():
@@ -1806,38 +1227,6 @@ Com este método de API, você pode descobrir o número de endereços de email d
 
 **Exemplos de código**
 
-```php
-<?php
-function getEmailCount()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'access_token' => $token,
-        'domain'       => 'octagon.com',
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v1/get-domain-emails-count',
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => $params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
-
 ```python
 def get_email_count():
 token = get_access_token()
@@ -1896,54 +1285,6 @@ A maneira mais fácil de enviar esta solicitação é por meio de um corpo JSON 
 | `webhook_url` | Insira seu URL de webhook para receber os resultados instantaneamente em vez de usar uma tarefa de hash. |
 
 **Exemplos de código**
-
-```php
-<?php
-function emailsByDomainByNameSearch()
-{
-    $token = getAccessToken();
-
-    $headers = [
-        'Authorization: Bearer ' . $token,
-    ];
-
-    $params = [
-        'rows' => [
-              [
-               'first_name' => 'John',
-               'last_name' => 'Doe',
-               'domain' => 'yourdomain.com',
-              ],
-              [
-               'first_name' => 'John',
-               'last_name' => 'Doe',
-               'domain' => 'yourdomain.com',
-              ]
-         ],
-        'webhook_url' => 'https://hooks.yourdomain.com',
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/emails-by-domain-by-name/start',
-        CURLOPT_HTTPHEADER     => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => http_build_query($params),
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
 
 ```python
 def emails_by_domain_by_name_search():
@@ -2019,37 +1360,6 @@ return json.loads(res.text)
 | `task_hash` | ID de solicitação exclusivo que você recebeu da solicitação anterior. |
 
 **Exemplos de código**
-
-```php
-<?php
-function emailsByDomainByNameResult()
-{
-    $token = getAccessToken();
-
-    $task_hash = '475d03ac6f98c124349b0f2efb506702';
-    $headers = [
-        'Authorization: Bearer ' . $token,
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/emails-by-domain-by-name/result?task_hash=$task_hash',
-        CURLOPT_HTTPHEADER     => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
 
 ```python
 def emails_by_domain_by_name_result():
@@ -2157,43 +1467,6 @@ Insira nomes de empresas, e a Snov.io retornará os respectivos endereços de do
 
 **Exemplos de código**
 
-```php
-<?php
-function companyDomainByNameStart()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'names'    => ['Snov.io','SendPulse'],
-        'webhook_url'         => 'https://hooks.yourdomain.com',
-    ];
-
-    $headers = [
-        'Authorization: Bearer ' . $token,
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/company-domain-by-name/start',
-        CURLOPT_HTTPHEADER     => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => http_build_query($params),
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
-
 ```python
 def company_domain_by_name_start():
 token = get_access_token()
@@ -2243,38 +1516,6 @@ return json.loads(res.text)
 | `task_hash` | ID de solicitação exclusivo que você recebeu da solicitação anterior. |
 
 **Exemplos de código**
-
-```php
-<?php
-function companyDomainByNameResult()
-{
-    $token = getAccessToken();
-
-    $task_hash = '48c156a785cfc1f3b0edab2cc28b3774';
-
-    $headers = [
-        'Authorization: Bearer ' . $token,
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/company-domain-by-name/result?task_hash=$task_hash',
-        CURLOPT_HTTPHEADER     => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
 
 ```python
 def company_domain_by_name_result():
@@ -2352,43 +1593,6 @@ Insira os URLs dos membros do LinkedIn, e a Snov.io recuperará todas as informa
 
 **Exemplos de código**
 
-```php
-<?php
-function linkedInProfilesByUrlsStart()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'urls'    => ['https://www.linkedin.com/in/oleksii-kratko-6a0544187/','https://www.linkedin.com/in/atahualpamaia/'],
-        'webhook_url'         => 'https://hooks.yourdomain.com',
-    ];
-
-    $headers = [
-        'Authorization: Bearer ' . $token,
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/li-profiles-by-urls/start',
-        CURLOPT_HTTPHEADER     => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => http_build_query($params),
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
-
 ```python
 def linkedin_profiles_by_urls_start():
 token = get_access_token()
@@ -2439,38 +1643,6 @@ return json.loads(res.text)
 | `task_hash` | ID de solicitação exclusivo que você recebeu da solicitação anterior. |
 
 **Exemplos de código**
-
-```php
-<?php
-function linkedInProfilesByUrlsResult()
-{
-    $token = getAccessToken();
-
-    $task_hash = 'ef005a4f6d82e7e88384de7c72ee198d';
-
-    $headers = [
-        'Authorization: Bearer ' . $token,
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/li-profiles-by-urls/result?task_hash=$task_hash',
-        CURLOPT_HTTPHEADER     => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
 
 ```python
 def linkedin_profiles_by_urls_result():
@@ -2636,38 +1808,6 @@ Forneça um endereço de email e a Snov.io retornará todas as informações de 
 
 **Exemplos de código**
 
-```php
-<?php
-function getProfileByEmail()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'access_token'    => $token,
-        'email'           => 'gavin.vanrooyen@octagon.com'
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v1/get-profile-by-email',
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => $params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-    
-    return $res;
-
-}
-?>
-```
-
 ```python
 def get_profile_by_email():
 token = get_access_token()
@@ -2829,43 +1969,6 @@ Fornecendo e-mails
 
 **Exemplos de código**
 
-```php
-<?php
-function emailVerificationStart()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'emails'    => ['gavin.vanrooyen@octagon.com','lizi.hamer@octagon.com','admin@snov.io','test@snov.io','ivalid_format_snov.io'],
-        'webhook_url'         => 'https://hooks.yourdomain.com',
-    ];
-
-    $headers = [
-        'Authorization: Bearer ' . $token,
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/email-verification/start',
-        CURLOPT_HTTPHEADER     => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => http_build_query($params),
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
-
 ```python
 def email_verification_start():
 token = get_access_token()
@@ -2917,38 +2020,6 @@ return json.loads(res.text)
 | `task_hash` | ID de solicitação exclusivo que você recebeu da solicitação anterior. |
 
 **Exemplos de código**
-
-```php
-<?php
-function emailVerificationResult()
-{
-    $token = getAccessToken();
-
-    $task_hash = '0110437df6811068197577a538849a4b';
-
-    $headers = [
-        'Authorization: Bearer ' . $token,
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/email-verification/result?task_hash=$task_hash',
-        CURLOPT_HTTPHEADER     => $headers,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $response = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $response;
-}
-?>
-```
 
 ```python
 def email_verification_result():
@@ -3094,53 +2165,6 @@ Este método conecta uma nova conta de e-mail SMTP/IMAP ao seu workspace da snov
 
 **Exemplos de código**
 
-```php
-<?php
-function createEmailAccount()
-{
-    $token = getAccessToken();
-    $params = json_encode([
-        'sender_name' => 'John Smith',
-        'email_from'  => 'john@example.com',
-        'password'    => 'app_password_here',
-        'smtp' => [
-            'host'       => 'smtp.gmail.com',
-            'port'       => 465,
-            'encryption' => 'ssl'
-        ],
-        'imap' => [
-            'host'       => 'imap.gmail.com',
-            'port'       => 993,
-            'encryption' => 'ssl'
-        ],
-        'limitation'  => 50,
-        'delay_type'  => 'random',
-        'delay_from'  => 600,
-        'delay_to'    => 900,
-        'reply_to'    => 'replies@example.com',
-        'bcc_email'   => 'bcc@example.com',
-        'tags'        => ['Canada campaign 2025']
-    ]);
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/sender-accounts/emails',
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => $params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json'
-        ]
-    ];
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-    return $res;
-}
-?>
-```
-
 ```python
 def create_email_account():
     token = get_access_token()
@@ -3272,38 +2296,6 @@ Este método atualiza uma conta de remetente SMTP/IMAP existente. Todos os campo
 
 **Exemplos de código**
 
-```php
-<?php
-function updateEmailAccount($accountId)
-{
-    $token = getAccessToken();
-    $params = json_encode([
-        'sender_name' => 'John Smith Updated',
-        'limitation'  => 100,
-        'delay_type'  => 'fixed',
-        'delay_fixed' => 600,
-        'tags'        => ['Canada campaign 2025', 'Q2']
-    ]);
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/sender-accounts/emails/' . $accountId,
-        CURLOPT_CUSTOMREQUEST  => 'PATCH',
-        CURLOPT_POSTFIELDS     => $params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json'
-        ]
-    ];
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-    return $res;
-}
-?>
-```
-
 ```python
 def update_email_account(account_id):
     token = get_access_token()
@@ -3398,32 +2390,6 @@ Este método verifica o status da conexão SMTP e (opcionalmente) IMAP de uma co
 
 **Exemplos de código**
 
-```php
-<?php
-function checkSenderStatus($senderAccountId)
-{
-    $token = getAccessToken();
-    $query = http_build_query([
-        'sender_account_id' => $senderAccountId
-    ]);
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/sender-accounts/check-sender-status?' . $query,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json'
-        ]
-    ];
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-    return $res;
-}
-?>
-```
-
 ```python
 def check_sender_status(sender_account_id):
     token = get_access_token()
@@ -3502,32 +2468,6 @@ Este método exibe uma lista de todas as contas de e-mail conectadas.
 | --- |
 
 **Exemplos de código**
-
-```php
-<?php
-function getSenderEmails()
-{
-    $token = getAccessToken();
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/sender-accounts/emails',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json',
-        ],
-    ];
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
 
 ```python
 def get_sender_emails():
@@ -3637,45 +2577,6 @@ Este método cria e inicia uma nova campanha de aquecimento para a conta de e-ma
 
 **Exemplos de código**
 
-```php
-<?php
-function createWarmUp()
-{
-    $token = getAccessToken();
-    $params = json_encode([
-        'email_account_id'    => 123,
-        'strategy'            => 'progressive',
-        'per_day'             => 50,
-        'from'                => 2,
-        'increase'            => 2,
-        'reply_rate'          => 30,
-        'campaign_deadline'   => '2026-12-31',
-        'send_to_paid_domain' => false,
-        'enable_proxy'        => false
-    ]);
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/warm-up',
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => $params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json'
-        ],
-    ];
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
-
 ```python
 def create_warm_up():
     token = get_access_token()
@@ -3745,37 +2646,6 @@ Este método retorna uma lista paginada de todas as campanhas de aquecimento na 
 | `status` | Filtrar por status. Valores permitidos: active , paused , completed , error . Omita para retornar todos. |
 
 **Exemplos de código**
-
-```php
-<?php
-function getWarmUpList()
-{
-    $token = getAccessToken();
-    $params = http_build_query([
-        'page'     => 1,
-        'per_page' => 20,
-        'status'   => 'active'
-    ]);
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/warm-up?' . $params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json'
-        ],
-    ];
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
 
 ```python
 def get_warm_up_list():
@@ -3881,32 +2751,6 @@ Este método retorna os detalhes completos de uma única campanha de aquecimento
 | `id *necessário (path)` | Integer. ID da campanha de aquecimento. |
 
 **Exemplos de código**
-
-```php
-<?php
-function getWarmUpById($warmUpId)
-{
-    $token = getAccessToken();
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/warm-up/' . $warmUpId,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json'
-        ],
-    ];
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
 
 ```python
 def get_warm_up_by_id(warm_up_id):
@@ -4041,39 +2885,6 @@ Este método atualiza parcialmente uma campanha de aquecimento existente. Apenas
 
 **Exemplos de código**
 
-```php
-<?php
-function updateWarmUp($warmUpId)
-{
-    $token = getAccessToken();
-    $params = json_encode([
-        'reply_rate'        => 10,
-        'campaign_deadline' => '2027-06-30',
-        'enable_proxy'      => true
-    ]);
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/warm-up/' . $warmUpId,
-        CURLOPT_CUSTOMREQUEST  => 'PATCH',
-        CURLOPT_POSTFIELDS     => $params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json'
-        ],
-    ];
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
-
 ```python
 def update_warm_up(warm_up_id):
     token = get_access_token()
@@ -4136,33 +2947,6 @@ Este método exclui uma campanha de aquecimento pelo seu ID. Uma vez excluída, 
 
 **Exemplos de código**
 
-```php
-<?php
-function deleteWarmUp($warmUpId)
-{
-    $token = getAccessToken();
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/warm-up/' . $warmUpId,
-        CURLOPT_CUSTOMREQUEST  => 'DELETE',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json'
-        ],
-    ];
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
-
 ```python
 def delete_warm_up(warm_up_id):
     token = get_access_token()
@@ -4220,35 +3004,6 @@ Este método retorna estatísticas diárias e por provedor de entregabilidade de
 | `date_to` | String ( YYYY-MM-DD ). Fim de um intervalo de datas personalizado. Deve ser ≥ date_from e ≥ a data de início da campanha. Obrigatório quando period não é fornecido. |
 
 **Exemplos de código**
-
-```php
-<?php
-function getWarmUpStatistics($warmUpId)
-{
-    $token = getAccessToken();
-    $params = http_build_query([
-        'period' => 'two_weeks'
-    ]);
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/warm-up/statistics/' . $warmUpId . '?' . $params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json'
-        ],
-    ];
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
 
 ```python
 def get_warm_up_statistics(warm_up_id):
@@ -4395,38 +3150,6 @@ Este método exibe uma lista de todas as campanhas do usuário. Se o usuário es
 | --- |
 
 **Exemplos de código**
-
-```php
-<?php
-function userCampaigns()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'access_token' => $token
-    ];
-
-    $params = http_build_query($params);
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v1/get-user-campaigns?'.$params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
 
 ```python
 def user_lists():
@@ -5148,88 +3871,6 @@ Este método cria uma nova campanha de prospecção no seu workspace do snov.io.
 
 **Exemplos de código**
 
-```php
-<?php
-function createCampaign() {
-    $token = getAccessToken();
-
-    $requestParameters = [
-        'title'             => 'My top campaign',
-        'email_accounts'    => [649079],
-        'linkedin_accounts' => [],
-        'priority'          => 'high',
-        'tracking' => [
-            'open'       => true,
-            'link_click' => true
-        ],
-        'sending_settings' => [
-            'sending_priority'                               => 'first_email',
-            'daily_sending_all'                              => 10,
-            'daily_sending_new_recipients'                   => 5,
-            'skip_unverifiable'                              => true,
-            'skip_unverified'                                => false,
-            'skip_who_replied'                               => true,
-            'skip_company_domain_who_replied'                => false,
-            'skip_recipients_without_variables_data'         => true,
-            'skip_other_recipients_email_addresses'          => true,
-            'skip_recipients_added_to_my_another_campaign'   => false,
-            'skip_recipients_added_to_team_another_campaign' => false,
-            'one_click_unsubscribe'                          => true,
-            'delay_type'                                     => 'random',
-            'delay_from'                                     => 600,
-            'delay_to'                                       => 900
-        ],
-        'recipients' => [
-            'list_id'       => 32,
-            'black_list_id' => 8
-        ],
-        'schedule_id'                       => 4,
-        'start_campaign_at'                 => '2027-03-25 09:00:00',
-        'complete_campaign_at'              => '2027-03-28 06:00:00',
-        'timezone'                          => 'America/New_York',
-        'complete_campaign_after_last_step' => false,
-        'archive_in_months'                 => 3,
-        'provider_matching'                 => false,
-        'sequence' => [
-            'entry' => '1773996379996',
-            'steps' => [
-                [
-                    '_ref'          => '1773996379996',
-                    'type'          => 'email',
-                    'content_slots' => 3,
-                    'next'          => '1774364404811'
-                ],
-                [
-                    '_ref'      => '1774364404811',
-                    'type'      => 'goal',
-                    'goal_name' => 'end'
-                ]
-            ]
-        ]
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/campaigns/create',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => json_encode($requestParameters),
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json',
-        ],
-    ];
-
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-
-    return $res;
-}
-?>
-```
-
 ```python
 import json
 import requests
@@ -5418,37 +4059,6 @@ Este método permite que você recupere informações sobre uma campanha especí
 | `campaign_id *necessário` | Identificador exclusivo da campanha para a qual você deseja visualizar informações. |
 
 **Exemplos de código**
-
-```php
-<?php
-function getCampaign(int $campaignId)
-{
-    $token = getAccessToken();
-
-    $url = 'https://api.snov.io/v2/campaigns/' . $campaignId;
-
-    $options = [
-        CURLOPT_URL            => $url,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json',
-        ],
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-}
-?>
-```
 
 ```python
 import requests, json
@@ -5654,49 +4264,6 @@ Quando sequence é fornecido, o array substitui completamente o fluxograma exist
 
 **Exemplos de código**
 
-```php
-<?php
-function updateCampaign($campaignId)
-{
-    $token = getAccessToken();
-
-    $requestParameters = [
-        'title'    => 'Updated title via API',
-        'priority' => 'medium',
-        'tracking' => [
-            'open'       => true,
-            'link_click' => false
-        ],
-        'sending_settings' => [
-            'sending_priority'             => 'follow_up',
-            'daily_sending_all'            => null,
-            'daily_sending_new_recipients' => 15,
-            'skip_who_replied'             => true
-        ]
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/campaigns/' . $campaignId,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_CUSTOMREQUEST  => 'PATCH',
-        CURLOPT_POSTFIELDS     => json_encode($requestParameters),
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json',
-        ],
-    ];
-
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-
-    return $res;
-}
-?>
-```
-
 ```python
 def update_campaign(campaign_id):
     token = get_access_token()
@@ -5839,31 +4406,6 @@ Este método permite gerenciar o estado da campanha — lançá-la, pausá-la, c
 
 **Exemplos de código**
 
-```php
-<?php
-
-$campaignId = 123;
-$apiUrl = 'https://api.snov.io/v2/campaigns/' . $campaignId . '/action';
-
-$ch = curl_init($apiUrl);
-
-curl_setopt_array($ch, [
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_POST => true,
-    CURLOPT_HTTPHEADER => [
-        'Authorization: Bearer ' . $accessToken,
-        'Content-Type: application/json',
-    ],
-    CURLOPT_POSTFIELDS => json_encode(['action' => 'start']),
-]);
-
-$response = curl_exec($ch);
-curl_close($ch);
-
-$result = json_decode($response, true);
-print_r($result);
-```
-
 ```python
 import requests
 
@@ -5913,33 +4455,6 @@ Este método exclui uma campanha pelo seu ID. A exclusão é permitida apenas pa
 | `campaign_id *necessário (path)` | Inteiro. ID da campanha a ser excluída. |
 
 **Exemplos de código**
-
-```php
-<?php
-function deleteCampaign($campaignId)
-{
-    $token = getAccessToken();
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/campaigns/' . $campaignId,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_CUSTOMREQUEST  => 'DELETE',
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json',
-        ],
-    ];
-
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-
-    return $res;
-}
-?>
-```
 
 ```python
 def delete_campaign(campaign_id):
@@ -5992,32 +4507,6 @@ Este método exibe uma lista de todas as programações de campanhas.
 | --- |
 
 **Exemplos de código**
-
-```php
-<?php
-function getCampaignSchedules()
-{
-    $token = getAccessToken();
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/campaigns/schedules',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json',
-        ],
-    ];
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
 
 ```python
 def get_campaign_schedules():
@@ -6132,45 +4621,6 @@ Este método cria ou atualiza um bloco de conteúdo para uma etapa de sequência
 
 **Exemplos de código**
 
-```php
-<?php
-
-function createEmailContent(int $campaignId, int $stepId)
-{
-    $token = getAccessToken();
-
-    $requestParameters = [
-        'content_id' => 1,
-        'subject'    => 'Hey, I have something for you',
-        'body'       => '<p>Hi {{first_name}}, ...</p>',
-        'plain_text' => false,
-        'usage'      => 'active',
-    ];
-
-    $url = 'https://api.snov.io/v2/campaigns/' . $campaignId . '/steps/' . $stepId . '/content/create';
-
-    $options = [
-        CURLOPT_URL            => $url,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_CUSTOMREQUEST  => 'POST',
-        CURLOPT_POSTFIELDS     => json_encode($requestParameters),
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json',
-        ],
-    ];
-
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-
-    return $res;
-}
-?>
-```
-
 ```python
 def create_email_content(campaign_id, step_id):
     token = get_access_token()
@@ -6243,35 +4693,6 @@ Este método retorna um bloco de conteúdo de uma etapa de sequência de e-mail 
 
 **Exemplos de código**
 
-```php
-<?php
-
-function getEmailContent(int $campaignId, int $stepId, int $contentId)
-{
-    $token = getAccessToken();
-
-    $url = 'https://api.snov.io/v2/campaigns/' . $campaignId . '/steps/' . $stepId . '/content/' . $contentId;
-
-    $options = [
-        CURLOPT_URL            => $url,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json',
-        ],
-    ];
-
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-
-    return $res;
-}
-?>
-```
-
 ```python
 def get_email_content(campaign_id, step_id, content_id):
     token = get_access_token()
@@ -6337,41 +4758,6 @@ Este método atualiza parcialmente um bloco de conteúdo de uma etapa de sequên
 | `usage` | String. Estado do bloco de conteúdo. Valores permitidos: "active" , "pause" . |
 
 **Exemplos de código**
-
-```php
-<?php
-
-function updateEmailContent(int $campaignId, int $stepId, int $contentId)
-{
-    $token = getAccessToken();
-
-    $requestParameters = [
-        'subject' => 'Updated subject',
-    ];
-
-    $url = 'https://api.snov.io/v2/campaigns/' . $campaignId . '/steps/' . $stepId . '/content/' . $contentId;
-
-    $options = [
-        CURLOPT_URL            => $url,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_CUSTOMREQUEST  => 'PATCH',
-        CURLOPT_POSTFIELDS     => json_encode($requestParameters),
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json',
-        ],
-    ];
-
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-
-    return $res;
-}
-?>
-```
 
 ```python
 def update_email_content(campaign_id, step_id, content_id):
@@ -6441,36 +4827,6 @@ Este método remove um bloco de conteúdo de uma etapa de sequência de e-mail. 
 
 **Exemplos de código**
 
-```php
-<?php
-
-function deleteEmailContent(int $campaignId, int $stepId, int $contentId)
-{
-    $token = getAccessToken();
-
-    $url = 'https://api.snov.io/v2/campaigns/' . $campaignId . '/steps/' . $stepId . '/content/' . $contentId;
-
-    $options = [
-        CURLOPT_URL            => $url,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_CUSTOMREQUEST  => 'DELETE',
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json',
-        ],
-    ];
-
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-
-    return $res;
-}
-?>
-```
-
 ```python
 def delete_email_content(campaign_id, step_id, content_id):
     token = get_access_token()
@@ -6525,30 +4881,6 @@ Este método verifica se os emails especificados estão presentes como destinat�
 | `emails[] *necessário` | Array de endereços de email a verificar. Mínimo 1, máximo 100 por solicitação. Cada email deve ser exclusivo e não pode ter mais de 100 caracteres. |
 
 **Exemplos de código**
-
-```php
-
-<?php
-function checkRecipientStatus($campaignId, array $emails)
-{
-    $token = getAccessToken();
-    $query = http_build_query([
-        'access_token' => $token,
-        'emails'       => $emails,
-    ]);
-    $options = [
-        CURLOPT_URL            => "https://api.snov.io/v2/campaigns/{$campaignId}/recipient?{$query}",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-    ];
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-    return $res;
-}
-?>
-```
 
 ```python
 
@@ -6618,41 +4950,6 @@ Altere o status de um destinatário em uma campanha específica.
 
 **Exemplos de código**
 
-```php
-<?php
-function changeRecipientStatus()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'access_token' => $token,
-        'email'       => 'gavin.vanrooyen@octagon.com',
-        'campaign_id'    => '179025',
-        'status'     => 'Paused'
-    ];
-
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v1/change-recipient-status',
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => $params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
-
 ```python
 def change_recipient_status():
 token = get_access_token()
@@ -6698,39 +4995,6 @@ Este método retorna clientes potenciais para os quais a campanha foi concluída
 | `campaignId *necessário` | Identificador exclusivo da campanha para recuperar a lista de clientes potenciais. |
 
 **Exemplos de código**
-
-```php
-<?php
-function finishedProspects()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'access_token' => $token,
-        'campaignId'   => 1234567
-    ];
-
-    $params = http_build_query($params);
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v1/prospect-finished?'.$params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
 
 ```python
 def user_lists():
@@ -6792,42 +5056,6 @@ Usando este método, você pode adicionar um e-mail ou domínio à sua Lista de 
 
 **Exemplos de código**
 
-```php
-<?php
-function addToBlackList()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'access_token' => $token
-    ];
-
-    $data = http_build_query([
-      'items' => [
-          'gavin.vanrooyen@octagon.com',
-          'octagon.com'
-      ]
-  ]);
-
-    $options = [
-        CURLOPT_URL => 'https://api.snov.io/v1/do-not-email-list?'. $data,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => $params,
-        CURLOPT_FOLLOWLOCATION => true,
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-}
-?>
-```
-
 ```python
 def do_not_email_list():
     token = get_access_token()
@@ -6880,32 +5108,6 @@ Este método retorna um compilado de todas as Listas de não envio de e-mails
 | --- |
 
 **Exemplos de código**
-
-```php
-<?php
-function getBlacklists()
-{
-    $token = getAccessToken();
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/blacklists',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json',
-        ],
-    ];
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
 
 ```python
 def get_blacklists():
@@ -6973,46 +5175,6 @@ Este método mostra as estatísticas da campanha com base nos filtros aplicados.
 | `date_to *necessário` | A data de fim do período sobre o qual você deseja receber estatísticas. Formato: aaaa-mm-dd. |
 
 **Exemplos de código**
-
-```php
-<?php
-function getCampaignAnalytics()
-{
-    $token = getAccessToken();
-
-    $campaignIds = [1, 2];
-    $senderEmailIds = [21, 22];
-    $senderLinkedInIds = [31, 32, 33];
-    $ownerEmails = ['owner1@email.loc', 'owner2@email.loc'];
-
-    $params = [
-        'access_token' => $token,
-        'campaign_id' => implode(',', $campaignIds),
-        'sender_email' => implode(',', $senderEmailIds),
-        'sender_linkedin' => implode(',', $senderLinkedInIds),
-        'campaign_owner' => implode(',', $ownerEmails),
-        'date_from' => '2024-06-15',
-        'date_to' => '2024-09-15',
-    ];
-
-    $params = http_build_query($params);
-    $options = [
-        CURLOPT_URL => 'https://api.snov.io/v2/statistics/campaign-analytics?' . $params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-
-    return $res;
-}
-?>
-```
 
 ```python
 def get_campaign_analytics():
@@ -7162,36 +5324,6 @@ Este método retorna o andamento e o status da campanha.
 
 **Exemplos de código**
 
-```php
-<?php
-function getCampaignProgress()
-{
-    $token = getAccessToken();
-
-    $campaignId = 1;
-    $params = [
-        'access_token' => $token,
-    ];
-
-    $params = http_build_query($params);
-    $options = [
-        CURLOPT_URL => "https://api.snov.io/v2/campaigns/$campaignId/progress?" . $params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-
-    return $res;
-}
-?>
-```
-
 ```python
 def get_campaign_progress():
     token = get_access_token()
@@ -7250,33 +5382,6 @@ Este método retorna um relatório detalhado de atividade para todos os destinat
 | `limit` | Número de registros por página (padrão: 100 , máximo: 1000 ). |
 
 **Exemplos de código**
-
-```php
-
-<?php
-function getCampaignRecipientsActivity($campaignId, $dateFrom, $dateTo, $offset = 0, $limit = 100)
-{
-    $token = getAccessToken();
-    $params = http_build_query([
-        'access_token' => $token,
-        'dateFrom'     => $dateFrom,
-        'dateTo'       => $dateTo,
-        'offset'       => $offset,
-        'limit'        => $limit,
-    ]);
-    $options = [
-        CURLOPT_URL            => "https://api.snov.io/v2/campaigns/{$campaignId}/recipients-activity?{$params}",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-    ];
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-    return $res;
-}
-?>
-```
 
 ```python
 
@@ -7389,39 +5494,6 @@ Este método mostra as informações sobre os emails enviados na campanha.
 
 **Exemplos de código**
 
-```php
-<?php
-function emailsSended()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'access_token' => $token,
-        'campaignId'   => 1234567
-    ];
-
-    $params = http_build_query($params);
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v1/emails-sent?'.$params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
-
 ```python
 def user_lists():
 token = get_access_token()
@@ -7496,39 +5568,6 @@ Este método mostra as informações sobre os emails abertos na campanha.
 | `offset` | Você pode coletar até 10.000 aberturas para cada solicitação. Se sua campanha tiver mais aberturas de e-mails, use o deslocamento para indicar quantas aberturas anteriores você deseja ignorar. Por exemplo, se sua campanha tiver 20.000 aberturas, e você quiser solicitar as aberturas de 10.001 a 20.000, configure um deslocamento de 10.000. Se o deslocamento não for especificado, você obterá as últimas 10.000 aberturas de e-mails. |
 
 **Exemplos de código**
-
-```php
-<?php
-function emailsOpen()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'access_token' => $token,
-        'campaignId'   => 1234567
-    ];
-
-    $params = http_build_query($params);
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v1/get-emails-opened?'.$params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
 
 ```python
 def user_lists():
@@ -7608,39 +5647,6 @@ Este método retorna informações sobre todos os destinatários que clicaram em
 | `offset` | Você pode coletar até 10.000 cliques para cada solicitação. Se sua campanha tiver mais cliques, use o deslocamento para indicar quantos cliques anteriores você deseja ignorar. Por exemplo, se sua campanha tiver 20.000 cliques, e você quiser solicitar os cliques de 10.001 a 20.000, configure um deslocamento de 10.000. Se o deslocamento não for especificado, você obterá os últimos 10.000 e-mails que geraram clique no link dentro da campanha. |
 
 **Exemplos de código**
-
-```php
-<?php
-function emailsClicked()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'access_token' => $token,
-        'campaignId'   => 1234567
-    ];
-
-    $params = http_build_query($params);
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v1/get-emails-clicked?'.$params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
 
 ```python
 def user_lists():
@@ -7722,30 +5728,6 @@ Este método exibe uma lista de todas as respostas recebidas em uma campanha —
 | `offset` | Deslocamento de paginação (padrão: 0 ). |
 
 **Exemplos de código**
-
-```php
-
-<?php
-function campaignAllReplies($campaignId, $offset = 0)
-{
-    $token = getAccessToken();
-    $params = http_build_query([
-        'access_token' => $token,
-        'offset'       => $offset,
-    ]);
-    $options = [
-        CURLOPT_URL            => "https://api.snov.io/v2/campaigns/{$campaignId}/all-replies?{$params}",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-    ];
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-    return $res;
-}
-?>
-```
 
 ```python
 
@@ -7844,39 +5826,6 @@ Este método retorna as respostas de email recebidas em uma campanha, incluindo 
 
 **Exemplos de código**
 
-```php
-<?php
-function campaignReplies()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'access_token' => $token,
-        'campaignId'   => 1234567
-    ];
-
-    $params = http_build_query($params);
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v1/get-emails-replies?'.$params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
-
 ```python
 def user_lists():
 token = get_access_token()
@@ -7971,54 +5920,6 @@ Adicione um cliente potencial a uma lista específica. Esse método será útil 
 | `listId *necessário` | O identificador da lista ao qual o cliente potencial pertence. |
 
 **Exemplos de código**
-
-```php
-<?php
-function addProspectToList()
-{
-  $token = getAccessToken();
-
-  $params = [
-    'access_token'                => $token,
-    'email'                       => 'john.doe@example.com',
-    'fullName'                    => 'John Doe',
-    'firstName'                   => 'John',
-    'lastName'                    => 'Doe',
-    'phones'                      => ['+18882073333', '+18882074444'],
-    'country'                     => 'United States',
-    'locality'                    => 'Woodbridge, New Jersey',
-    'socialLinks' => [
-      'linkedIn'  => 'https://www.linkedin.com/in/johndoe/&social',
-      'twiiter' => 'https://twitter.com/johndoe&social',
-    ],
-    'customFields[specialization]'=> 'Software Engineering',
-    'position'                    => 'Vice President of Sales',
-    'companyName'                 => 'GoldenRule',
-    'companySite'                 => 'https://goldenrule.com',
-    'updateContact'               => true,
-    'listId'                      => '12345',
-  ];
-
-  $options = [
-    CURLOPT_URL            => 'https://api.snov.io/v1/add-prospect-to-list',
-    CURLOPT_POST           => true,
-    CURLOPT_POSTFIELDS     => $params,
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_FOLLOWLOCATION => true
-  ];
-
-  $ch = curl_init();
-
-  curl_setopt_array($ch, $options);
-
-  $res = json_decode(curl_exec($ch), true);
-  curl_close($ch);
-
-  return $res;
-
-}
-?>
-```
 
 ```python
 def add_prospect_to_list():
@@ -8116,38 +6017,6 @@ Localize clientes potenciais de suas listas por ID. Ao conhecer o ID de um clien
 | `id *necessário` | O ID do cliente potencial. Você pode vê-lo na resposta ao adicionar um cliente potencial por meio de Adicionar cliente potencial à lista Método de API ou no URL ao visualizar a página do cliente potencial ( ver um exemplo ). |
 
 **Exemplos de código**
-
-```php
-<?php
-function getProspectById()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'access_token'    => $token,
-        'id'           => 'xusD3-T_K5IktGoaa8Jc8A=='
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v1/get-prospect-by-id',
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => $params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-    
-    return $res;
-
-}
-?>
-```
 
 ```python
 def getProspectById():
@@ -8278,38 +6147,6 @@ Encontre clientes potenciais de suas listas por endereço de email. Ao pesquisar
 | `email *necessário` | O endereço de email do cliente potencial |
 
 **Exemplos de código**
-
-```php
-<?php
-function getProspectsByEmail()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'access_token'    => $token,
-        'email'           => 'gavin.vanrooyen@octagon.com'
-    ];
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v1/get-prospects-by-email',
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => $params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-    curl_close($ch);
-    
-    return $res;
-
-}
-?>
-```
 
 ```python
 def getProspectsByEmail():
@@ -8442,38 +6279,6 @@ Este método retorna uma lista de todos os campos personalizados criados pelo us
 
 **Exemplos de código**
 
-```php
-<?php
-function customFields()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'access_token' => $token,
-    ];
-
-    $params = http_build_query($params);
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v1/prospect-custom-fields?'.$params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
-
 ```python
 def custom_fields():
 token = get_access_token()
@@ -8539,38 +6344,6 @@ Este método retorna todas as listas criadas pelo usuário. Você pode usá-lo p
 | --- |
 
 **Exemplos de código**
-
-```php
-<?php
-function getUserLists()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'access_token' => $token,
-    ];
-
-    $params = http_build_query($params);
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v1/get-user-lists?'.$params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
 
 ```python
 def user_lists():
@@ -8668,40 +6441,6 @@ Este método retorna todos os dados sobre os clientes potenciais em uma lista es
 | `perPage` | Defina o número máximo de prospects a serem incluídos na resposta. O valor máximo é 5.000. |
 
 **Exemplos de código**
-
-```php
-<?php
-function prospectsInList()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'access_token' => $token,
-        'listId'       => '1234567',
-        'page'         => '1',
-        'perPage'      => '2'
-    ];
-
-    $options = [
-        CURLOPT_URL            => ' https://api.snov.io/v1/prospect-list',
-        CURLOPT_POSTFIELDS     => $params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
 
 ```python
 def prospect_in_list():
@@ -8813,36 +6552,6 @@ Use este método para criar novas listas de clientes potenciais na sua conta.
 
 **Exemplos de código**
 
-```php
-<?php
-function createNewList()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'access_token' => $token,
-        'name' => 'New list'
-    ];
-
-    $options = [
-        CURLOPT_URL => 'https://api.snov.io/v1/lists',
-        CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => $params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-}
-?>
-```
-
 ```python
 def add_prospect_list():
     token = get_access_token()
@@ -8897,32 +6606,6 @@ Este método mostra uma lista de todos os pipelines da seção CRM (Negócios), 
 | --- |
 
 **Exemplos de código**
-
-```php
-<?php
-function getUserPipelines()
-{
-    $token = getAccessToken();
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/pipelines',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json',
-        ],
-    ];
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
 
 ```python
 def get_user_pipelines():
@@ -8992,32 +6675,6 @@ Este método mostra uma lista de todas as etapas dentro de um pipeline específi
 | `pipeline_id` | Identificador único do pipeline cujas etapas você deseja recuperar. |
 
 **Exemplos de código**
-
-```php
-<?php
-function getPipelineStages($pipelineId)
-{
-    $token = getAccessToken();
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v2/pipelines/' . $pipelineId . '/stages',
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_HTTPHEADER     => [
-            'Authorization: Bearer ' . $token,
-            'Content-Type: application/json',
-        ],
-    ];
-    $ch = curl_init();
-    curl_setopt_array($ch, $options);
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
 
 ```python
 def get_pipeline_stages(pipeline_id):
@@ -9094,38 +6751,6 @@ Use este método para verificar seu saldo de créditos.
 | --- |
 
 **Exemplos de código**
-
-```php
-<?php
-function getBalance()
-{
-    $token = getAccessToken();
-
-    $params = [
-        'access_token' => $token,
-    ];
-
-    $params = http_build_query($params);
-
-    $options = [
-        CURLOPT_URL            => 'https://api.snov.io/v1/get-balance?'.$params,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true
-    ];
-
-    $ch = curl_init();
-
-    curl_setopt_array($ch, $options);
-
-    $res = json_decode(curl_exec($ch), true);
-
-    curl_close($ch);
-
-    return $res;
-
-}
-?>
-```
 
 ```python
 def get_balance():

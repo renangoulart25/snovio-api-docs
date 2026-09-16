@@ -114,6 +114,8 @@ def _walk(node: Tag, out: list, seen_pre: set):
         if not isinstance(child, Tag):
             continue
         cls = child.get("class", [])
+        if "php" in cls:
+            continue
         name = child.name
         if name in ("h3", "h4") and child.get("id") in SUBGROUP_IDS:
             out.append(("subgroup", _clean(child.get_text(" ", strip=True))))
@@ -143,6 +145,8 @@ def _walk(node: Tag, out: list, seen_pre: set):
                 continue
             seen_pre.add(id(child))
             lang = _code_lang(child)
+            if lang == "php":
+                continue
             code = child.get_text().replace("\r\n", "\n").rstrip()
             if not lang and code.lstrip()[:1] in ("{", "["):
                 lang = "json"

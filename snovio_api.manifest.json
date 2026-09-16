@@ -5,262 +5,262 @@
     "DomainSearch2": {
       "verb": "POST",
       "name": "Pesquisa de domínios",
-      "hash": "d33aae74c812c459"
+      "hash": "aa8537e0be1226f4"
     },
     "DatabaseSearch": {
       "verb": "POST",
       "name": "Pesquisa de Banco de Dados",
-      "hash": "1439bd7e90704bb2"
+      "hash": "f37e83f93dfc53f9"
     },
     "EmailCount": {
       "verb": "POST",
       "name": "Verificar o número de e-mails disponíveis",
-      "hash": "4a2fc09bb362f2ff"
+      "hash": "7d281933d3a54662"
     },
     "EmailFinder": {
       "verb": "POST",
       "name": "Encontrar e-mails a partir do nome e domínio",
-      "hash": "5df1c8158aa2aa32"
+      "hash": "788611841e27730e"
     },
     "CompanyDomainByName": {
       "verb": "POST",
       "name": "Encontrar domínio a partir do nome da empresa",
-      "hash": "45e2362e73003b37"
+      "hash": "ebb601a8c8c6ec54"
     },
     "LiProfilesByUrls": {
       "verb": "POST",
       "name": "Obter informações do perfil do LinkedIn a partir de URLs",
-      "hash": "a92988e55f844b95"
+      "hash": "6e2a4e75bd08b1e6"
     },
     "GetProfileByEmail": {
       "verb": "POST",
       "name": "Preencher o perfil da pessoa a partir do e-mail",
-      "hash": "e7b9069c53d5fb9e"
+      "hash": "c3f8bcd6815da905"
     },
     "EmailVerifier": {
       "verb": "POST",
       "name": "Verificador de e-mails",
-      "hash": "006bb323d0547dd6"
+      "hash": "b0ad940ecaf91411"
     },
     "AddEmailAccount": {
       "verb": "POST",
       "name": "Adicionar nova conta de e-mail",
-      "hash": "3bf1bfbe767b111d"
+      "hash": "734bd365b33f2e5f"
     },
     "UpdateEmailAccount": {
       "verb": "PATCH",
       "name": "Atualizar conta de e-mail",
-      "hash": "2b091a46ff4523c4"
+      "hash": "0b039c8fab37654e"
     },
     "CheckSenderStatus": {
       "verb": "GET",
       "name": "Verificar status SMTP/IMAP do remetente",
-      "hash": "309580e74a4f9737"
+      "hash": "f56fcd37d7349e83"
     },
     "GetListOfEmailAccounts": {
       "verb": "GET",
       "name": "Obter lista de todas as contas de e-mail",
-      "hash": "231e7603f79979b4"
+      "hash": "ae4b35efd239b69e"
     },
     "CreateWarmUp": {
       "verb": "POST",
       "name": "Criar campanha de aquecimento",
-      "hash": "9b71d19a35d7fc80"
+      "hash": "e769012cbb656f0a"
     },
     "GetWarmUpList": {
       "verb": "GET",
       "name": "Obter lista de campanhas de aquecimento",
-      "hash": "dbc8294ac78d66a3"
+      "hash": "7fd8e5207feb4ad9"
     },
     "GetWarmUpById": {
       "verb": "GET",
       "name": "Obter informações da campanha de aquecimento",
-      "hash": "4f101cb96f99e75e"
+      "hash": "86787204bf80361c"
     },
     "UpdateWarmUp": {
       "verb": "PATCH",
       "name": "Atualizar campanha de aquecimento",
-      "hash": "9aeab2506b9701eb"
+      "hash": "c3408c7c89605664"
     },
     "DeleteWarmUp": {
       "verb": "DELETE",
       "name": "Excluir campanha de aquecimento",
-      "hash": "8a6d4f798426ddfd"
+      "hash": "dc24aecfae5d9232"
     },
     "GetWarmUpStatistics": {
       "verb": "GET",
       "name": "Obter estatísticas de aquecimento",
-      "hash": "28353ffe1851086b"
+      "hash": "ffcf90c961af4b05"
     },
     "UserCampaigns": {
       "verb": "GET",
       "name": "Ver todas as campanhas",
-      "hash": "d8f641510cdcc098"
+      "hash": "b9cdd32c65022bbe"
     },
     "CreateCampaign": {
       "verb": "POST",
       "name": "Criar campanha",
-      "hash": "b2aaf9b259f32ec1"
+      "hash": "75ac75fb94168319"
     },
     "GetCampaignInfo": {
       "verb": "GET",
       "name": "Obter informações da campanha",
-      "hash": "ce1215aef0335231"
+      "hash": "1f7c4789dd6cf3e3"
     },
     "UpdateCampaign": {
       "verb": "PATCH",
       "name": "Atualizar campanha",
-      "hash": "0b9ea2514a6517e0"
+      "hash": "c19abddb92be6932"
     },
     "ChangeCampaignState": {
       "verb": "POST",
       "name": "Alterar estado da campanha",
-      "hash": "f1af145c0fb9b62f"
+      "hash": "1c35c24c5fb91116"
     },
     "DeleteCampaign": {
       "verb": "DELETE",
       "name": "Excluir campanha",
-      "hash": "15fe03f189892771"
+      "hash": "8d6f5f5ca8955825"
     },
     "GetListOfSchedules": {
       "verb": "GET",
       "name": "Ver todos os agendamentos",
-      "hash": "57e694fb2934cd05"
+      "hash": "edc0e1020c8d9a89"
     },
     "CreateEmailStepContent": {
       "verb": "POST",
       "name": "Criar conteúdo de etapa de e-mail",
-      "hash": "1ef27b36db30e4de"
+      "hash": "0622bb6096c9ed6d"
     },
     "GetEmailStepContent": {
       "verb": "GET",
       "name": "Obter conteúdo de etapa de e-mail",
-      "hash": "9c7772abf6743391"
+      "hash": "b238e36dd3d99ef5"
     },
     "UpdateEmailStepContent": {
       "verb": "PATCH",
       "name": "Atualizar conteúdo de etapa de e-mail",
-      "hash": "2d87c4de8e525f16"
+      "hash": "c0087d3665162554"
     },
     "DeleteEmailStepContent": {
       "verb": "DELETE",
       "name": "Excluir conteúdo de etapa de e-mail",
-      "hash": "733e512146f58734"
+      "hash": "21c531071433b0be"
     },
     "CheckRecipientStatus": {
       "verb": "GET",
       "name": "Verificar status do destinatário",
-      "hash": "0e93a521b47e9b95"
+      "hash": "2fe853e80444af1b"
     },
     "ChangerecipientsStatus": {
       "verb": "POST",
       "name": "Alterar status do destinatário",
-      "hash": "4104b5d66280161c"
+      "hash": "ddcfcbec699a0aa1"
     },
     "ListOfFinishedProspects": {
       "verb": "GET",
       "name": "Ver lista de clientes potenciais concluídos",
-      "hash": "471b194d06fd7d0b"
+      "hash": "449aeb9cfa1dc16e"
     },
     "AddTODoNotEmailList": {
       "verb": "POST",
       "name": "Adicionar à Lista de e-mails a não enviar",
-      "hash": "4489109b62862d3d"
+      "hash": "bb6f7aa4abafeba5"
     },
     "GetListOfDNELists": {
       "verb": "GET",
       "name": "Ver todas as Listas de não envio de e-mails",
-      "hash": "aae2d9d57e73e646"
+      "hash": "7206c0d0e376ed1b"
     },
     "GetcampaignAnalytics": {
       "verb": "GET",
       "name": "Obter análises de campanha",
-      "hash": "c327b1e6c89d7d0e"
+      "hash": "c6fdb98ea04d6e56"
     },
     "ViewcampaignProgress": {
       "verb": "GET",
       "name": "Ver andamento da campanha",
-      "hash": "0141bc486fe6ef05"
+      "hash": "499f9d63fb14f930"
     },
     "GetCampaignRecipientsActivityReport": {
       "verb": "GET",
       "name": "Obter relatório de atividade dos destinatários da campanha",
-      "hash": "f7bb3e7f2cd9ba70"
+      "hash": "7b5a5af5c290c82e"
     },
     "EmailsSent": {
       "verb": "GET",
       "name": "Ver emails enviados",
-      "hash": "8d83d9f64b8192ce"
+      "hash": "efb88adab36c66a7"
     },
     "OpenEmails": {
       "verb": "GET",
       "name": "Ver informações sobre aberturas na campanha",
-      "hash": "23af3aa083e49ad4"
+      "hash": "7ba69ac7f5b2dfb0"
     },
     "EmailsClicked": {
       "verb": "GET",
       "name": "Ver cliques no link",
-      "hash": "aba30c8ac7b9c4d6"
+      "hash": "d607238f8b749861"
     },
     "SeeAllCampaignReplies": {
       "verb": "GET",
       "name": "Ver todas as respostas da campanha",
-      "hash": "81f2cf1f936ea062"
+      "hash": "13a04f781eb20512"
     },
     "CampaignReplies": {
       "verb": "GET",
       "name": "Ver as respostas de email da campanha",
-      "hash": "2041056593e6a5cc"
+      "hash": "ee91e0c065703f0d"
     },
     "AddProspectToList": {
       "verb": "POST",
       "name": "Adicionar cliente potencial à lista",
-      "hash": "ed366743f685a776"
+      "hash": "5c5e40ac21b2424c"
     },
     "FindProspectbyID": {
       "verb": "POST",
       "name": "Localizar cliente potencial por ID",
-      "hash": "51b44bca6f7945ff"
+      "hash": "7ec716be410ed493"
     },
     "FindProspectbyEmail": {
       "verb": "POST",
       "name": "Localizar cliente potencial por email",
-      "hash": "6c6375b8e9991f6f"
+      "hash": "5689ee2209b786e1"
     },
     "FindProspectsCustomFields": {
       "verb": "GET",
       "name": "Encontrar os campos personalizados do cliente potencial",
-      "hash": "b537be83b0a732a2"
+      "hash": "d5d8aff4ac74c605"
     },
     "UserLists": {
       "verb": "GET",
       "name": "Ver listas do usuário",
-      "hash": "4e03692046e9c5ec"
+      "hash": "b87b1b3f73d77d2f"
     },
     "ViewProspectsInList": {
       "verb": "POST",
       "name": "Ver clientes potenciais na lista",
-      "hash": "fda878b2a5d50462"
+      "hash": "0c30b71a2c5c9384"
     },
     "CreateNewProspectList": {
       "verb": "POST",
       "name": "Criar nova lista de clientes potenciais",
-      "hash": "bd98283757449f56"
+      "hash": "a86f68ce0cfd69ec"
     },
     "GetListOfPipelines": {
       "verb": "GET",
       "name": "Obter lista de pipelines",
-      "hash": "5edc538756d3a81a"
+      "hash": "ea38770279bff6ef"
     },
     "GetListOfPipelineStages": {
       "verb": "GET",
       "name": "Obter lista de etapas do pipeline",
-      "hash": "3b6a18ca1dd90524"
+      "hash": "9ab860ca27265a0e"
     },
     "CheckUserBalance": {
       "verb": "GET",
       "name": "Verificar saldo do usuário",
-      "hash": "c63d67bd41c97ce6"
+      "hash": "c2684fe17f826f80"
     },
     "webhooks-description": {
       "verb": null,

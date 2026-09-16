@@ -98,6 +98,7 @@ return json.loads(resText)['access_token']
 
 - **Localizador de e-mails e enriquecimento**
   - [POST Pesquisa de domínios](#post-pesquisa-de-dominios)
+  - [POST Pesquisa de Banco de Dados](#post-pesquisa-de-banco-de-dados)
   - [POST Verificar o número de e-mails disponíveis](#post-verificar-o-numero-de-e-mails-disponiveis)
   - [POST Encontrar e-mails a partir do nome e domínio](#post-encontrar-e-mails-a-partir-do-nome-e-dominio)
   - [POST Encontrar domínio a partir do nome da empresa](#post-encontrar-dominio-a-partir-do-nome-da-empresa)
@@ -156,6 +157,7 @@ return json.loads(resText)['access_token']
 - **Conta do usuário**
   - [GET Verificar saldo do usuário](#get-verificar-saldo-do-usuario)
 - **Webhooks**
+  - [webhooks-description](#webhooks-description)
   - [GET Listar todos os webhooks](#get-listar-todos-os-webhooks)
   - [POST Adicionar webhook](#post-adicionar-webhook)
   - [PUT Alterar status de webhook](#put-alterar-status-de-webhook)
@@ -1109,6 +1111,679 @@ return json.loads(res.text)
 | `total_count` | Número total de e-mails genéricos encontrados para o domínio. |
 | `next` | URL da solicitação de obter os resultados da página a seguir, caso exista. Cada página tem até 50 e-mails. |
 | `status` | Status da solicitação. Pode ser completed ou in progress . |
+
+
+##### POST Pesquisa de Banco de Dados
+
+<!-- endpoint:DatabaseSearch -->
+
+Pesquise prospects e empresas no banco de dados. Use filtros para refinar sua busca.
+
+**Buscar prospects (solicitando resultados)**
+
+> Grátis (limitado a 1 página de resultados para contas Snov.io gratuitas)
+
+`POST` `https://api.snov.io/v2/database-search/prospects/start`
+
+**Parâmetros de entrada**
+
+| Parâmetro | Descrição |
+| --- | --- |
+| `filters.prospect.job_titles.include` | Lista de cargos que você deseja incluir. |
+| `filters.prospect.job_titles.exclude` | Lista de cargos para excluir. |
+| `filters.prospect.management_levels.include` | Lista de níveis gerenciais para incluir. Opções possíveis: c_level, vp_level, director_level, manager_level, staff. |
+| `filters.prospect.management_levels.exclude` | Lista de níveis gerenciais para excluir. Opções possíveis: c_level, vp_level, director_level, manager_level, staff. |
+| `filters.prospect.departments.include` | Lista de departamentos para incluir na busca. Opções possíveis: engineering, human_resources, it_is, finance_administration, marketing, operations, sales, support, other. |
+| `filters.prospect.departments.exclude` | Lista de departamentos para excluir da busca. Opções possíveis: engineering, human_resources, it_is, finance_administration, marketing, operations, sales, support, other. |
+| `filters.prospect.locations.include.locality` | Localizações para incluir, p. ex. Londres Se nenhuma correspondência for encontrada, a API retornará até 15 opções similares. |
+| `filters.prospect.locations.include.location_type` | Tipos de localização para incluir. Opções possíveis: city, state, country, region, subregion. |
+| `filters.prospect.locations.exclude.locality` | Localizações para excluir, p. ex. Atlanta Se nenhuma correspondência for encontrada, a API retornará até 15 opções similares. |
+| `filters.prospect.locations.exclude.location_type` | Tipos de localização a excluir. Opções possíveis: cidade, estado, país, região, sub-região. |
+| `filters.prospect.skills.include` | Lista de habilidades do prospect que você deseja incluir na pesquisa. |
+| `filters.prospect.skills.exclude` | Lista de habilidades do prospect que você deseja excluir. |
+| `filters.prospect.first_name` | Nome do prospect. |
+| `filters.prospect.last_name` | Sobrenome do prospect. |
+
+**Filtros da empresa**
+
+| Parâmetro | Descrição |
+| --- | --- |
+| `filters.company.name.include` | Lista de nomes de empresas a incluir. |
+| `filters.company.name.exclude` | Lista de nomes de empresas a excluir. |
+| `filters.company.locations.include.locality` | Localizações da empresa a incluir, ex. Londres Se nenhuma correspondência for encontrada, a API retorna uma lista com resultados similares. |
+| `filters.company.locations.include.location_type` | Tipos de localização da empresa a incluir. Opções possíveis: cidade, estado, país, região, sub-região. |
+| `filters.company.locations.exclude.locality` | Localizações da empresa para excluir, ex: Atlanta Se nenhuma correspondência for encontrada, a API retorna uma lista com resultados similares. |
+| `filters.company.locations.exclude.location_type` | Tipos de localização da empresa para excluir. Opções possíveis: city, state, country, region, subregion. |
+| `filters.company.industries.include` | Lista de setores para incluir. Se nenhuma correspondência for encontrada, a API retorna uma lista com resultados similares. |
+| `filters.company.industries.exclude` | Lista de setores para excluir. Se nenhuma correspondência for encontrada, a API retorna uma lista com resultados similares. |
+| `filters.company.size` | Faixa de tamanho da empresa. Opções possíveis: Self, 1-10, 11-50, 51-200, 201-500, 501-1000, 1001-5000, 5001-10000, 10001+ |
+| `filters.company.revenue.min` | Receita mínima da empresa. Opções possíveis: 0, 1, 500000, 1000000, 2500000, 5000000, 10000000, 20000000, 50000000, 100000000, 500000000, 1000000000 Atenção: a receita mínima não pode exceder a receita máxima definida. |
+| `filters.company.revenue.max` | Receita máxima da empresa. Opções possíveis: 0, 1, 500000, 1000000, 2500000, 5000000, 10000000, 20000000, 50000000, 100000000, 500000000, 1000000000, 1000000000000 |
+| `filters.company.specialities` | Lista de setores em que a empresa atua. |
+| `filters.company.founded.from` | Ano de fundação da empresa (desde). |
+| `filters.company.founded.till` | Ano de fundação da empresa (até). |
+
+**Paginação**
+
+| Parâmetro | Descrição |
+| --- | --- |
+| `page` | Número da página. A página 1 é retornada por padrão. |
+
+**Exemplos de código**
+
+```php
+<?php
+function prospectsSearch()
+{
+    $token = getAccessToken();
+
+    $params = [
+        'access_token' => $token,
+        'page' => 1,
+        'webhook_url' => 'https://hooks.yourdomain.com',
+        'filters' => [
+            'prospect' => [
+                'first_name' => 'John',
+                'last_name' => 'Doe',
+            ],
+            'company' => [
+                'name' => [
+                    'include' => ['Snov.io']
+                ],
+            ],
+        ],
+    ];
+
+    $options = [
+        CURLOPT_URL => 'https://api.snov.io/v2/database-search/prospects/start?' . http_build_query($params),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => $params,
+        CURLOPT_FOLLOWLOCATION => true,
+    ];
+
+    $ch = curl_init();
+
+    curl_setopt_array($ch, $options);
+
+    $response = json_decode(curl_exec($ch), true);
+
+    curl_close($ch);
+
+    return $response;
+}
+?>
+```
+
+```python
+def prospects_search():
+    token = get_access_token()
+
+    params = {
+        "access_token": token,
+        "page": 1,
+        "webhook_url": "https://hooks.yourdomain.com",
+        "filters": {
+            "prospect": {
+                "first_name": "John",
+                "last_name": "Doe",
+            },
+            "company": {
+                "name": {
+                    "include": ["Snov.io"]
+                }
+            }
+        }
+    }
+
+    response = requests.post(
+        "https://api.snov.io/v2/database-search/prospects/start",
+        json=params,
+    )
+
+    return response.json()
+```
+
+**Exemplo de resposta**
+
+```json
+
+{
+  "data": [],
+  "meta": {
+    "task_hash": "e8401d70910918cdb370153a306d1400",
+    "page": 1
+  },
+  "links": {
+    "result": "https://api.snov.io/v2/database-search/prospects/result/e8401d70910918cdb370153a306d1400"
+  }
+}
+```
+
+**Parâmetros de saída**
+
+| Parâmetro | Descrição |
+| --- | --- |
+| `task_hash` | ID único da tarefa de pesquisa que você iniciou. |
+| `result` | URL de solicitação que você usará para receber os resultados. |
+
+**Pesquisar prospects (obtendo resultados)**
+
+> URL recebida da sua solicitação anterior.
+
+`GET` `https://api.snov.io/v2/database-search/prospects/result/{task_hash}`
+
+**Exemplos de código**
+
+```php
+<?php
+function prospectsResult()
+{
+    $token = getAccessToken();
+
+    $task_hash = '3384369c16aad810f58609a40ad65089';
+
+    $params = [
+        'access_token' => $token,
+    ];
+
+    $options = [
+        CURLOPT_URL => "https://api.snov.io/v2/database-search/prospects/result/$task_hash?" . http_build_query($params),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_FOLLOWLOCATION => true,
+    ];
+
+    $ch = curl_init();
+
+    curl_setopt_array($ch, $options);
+
+    $response = json_decode(curl_exec($ch), true);
+
+    curl_close($ch);
+
+    return $response;
+}
+?>
+```
+
+```python
+def prospects_result():
+    token = get_access_token()
+
+    task_hash = "3384369c16aad810f58609a40ad65089"
+
+    response = requests.get(
+        f"https://api.snov.io/v2/database-search/prospects/result/{task_hash}",
+        params={
+            "access_token": token
+        }
+    )
+
+    return response.json()
+```
+
+**Exemplo de resposta**
+
+```json
+
+{
+  "data": {
+    "total": 162,
+    "page": 1,
+    "total_pages": 4,
+    "prospects": [
+      {
+        "first_name": "John",
+        "last_name": "Sm***",
+        "job_title": "linkbuilder",
+        "location": "Kyiv, Kyiv, Ukraine",
+        "linkedin_url": "https://linkedin.com/in/jo******",
+        "industry": "Computer Software",
+        "list_id": 123,
+        "email_and_hidden_info_reveal": "https://api.snov.io/v2/database-search/prospects/search-emails/start/{task_hash}",
+        "company": {
+          "name": "Snov.io",
+          "domain": "snov.io",
+          "location": "New York, New York, United States",
+          "industry": "Computer Software",
+          "size": "51-200"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "task_hash": "832c2ae36ca4e80fcbddeae0dea70efd",
+    "page": 1
+  },
+  "links": [],
+  "status": "completed"
+}
+```
+
+**Parâmetros de saída**
+
+| Parâmetro | Descrição |
+| --- | --- |
+| `total` | Número total de prospects encontrados. |
+| `page` | Número da página. |
+| `total_pages` | Número total de páginas com resultados. |
+| `prospects` | Matriz com informações do prospect. |
+| `first_name` | Nome do prospect. |
+| `last_name` | Sobrenome do prospect. |
+| `job_title` | Cargo do prospect. |
+| `location` | Localização do prospect. |
+| `linkedin_url` | URL do perfil do LinkedIn do prospect. |
+| `industry` | Setor em que o prospect atua. |
+| `list_id` | Mostra o ID da lista de prospects à qual o prospect foi adicionado. Só aparece se você já tiver adicionado esse prospect a uma lista. |
+| `email_and_hidden_info_reveal` | URL a ser usada na próxima solicitação para obter o e-mail do prospect. |
+| `company` | Array com informações da empresa. |
+| `name` | Nome da empresa. |
+| `domain` | Domínio da empresa. |
+| `location` | Localização da empresa. |
+| `industry` | Setor em que a empresa opera. |
+| `size` | Tamanho da empresa. |
+| `task_hash` | Task hash a ser usado na próxima solicitação para obter o e-mail do prospect. |
+
+**Perfil do prospect com e-mail (solicitando resultados)**
+
+> 1 crédito para cada prospect com e-mail. Use a URL + task hash recebidos na solicitação anterior.
+
+`POST` `https://api.snov.io/v2/database-search/prospects/search-emails/start/{task_hash}`
+
+**Exemplos de código**
+
+```php
+<?php
+function searchProspectEmailsStart()
+{
+    $token = getAccessToken();
+
+    $task_hash = '5e846a1d80d95f66cfb30250a7c1881f';
+
+    $params = [
+        'access_token' => $token,
+    ];
+
+    $options = [
+        CURLOPT_URL => "https://api.snov.io/v2/database-search/prospects/search-emails/start/$task_hash?" . http_build_query($params),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => $params,
+        CURLOPT_FOLLOWLOCATION => true,
+    ];
+
+    $ch = curl_init();
+
+    curl_setopt_array($ch, $options);
+
+    $response = json_decode(curl_exec($ch), true);
+
+    curl_close($ch);
+
+    return $response;
+}
+?>
+```
+
+```python
+def search_prospect_emails_start():
+    token = get_access_token()
+
+    task_hash = "5e846a1d80d95f66cfb30250a7c1881f"
+
+    response = requests.post(
+        f"https://api.snov.io/v2/database-search/prospects/search-emails/start/{task_hash}",
+        json={
+            "access_token": token
+        }
+    )
+
+    return response.json()
+```
+
+**Exemplo de resposta**
+
+```json
+
+{
+  "data": [],
+  "meta": {
+    "task_hash": "15e843a82ac180b5369aa97a879ae200"
+  },
+  "links": {
+    "result": "https://api.snov.io/v2/database-search/prospects/search-emails/result/15e843a82ac180b5369aa97a879ae200"
+  }
+}
+```
+
+**Parâmetros de saída**
+
+| Parâmetro | Descrição |
+| --- | --- |
+| `task_hash` | ID único da tarefa de pesquisa que você iniciou. |
+| `result` | URL para sua próxima solicitação de e-mail do potencial cliente. |
+
+**Perfil do prospect com e-mail (obtendo resultados)**
+
+> Use a URL recebida da solicitação anterior.
+
+`GET` `https://api.snov.io/v2/database-search/prospects/search-emails/result/{task_hash}`
+
+**Exemplos de código**
+
+```php
+<?php
+function searchProspectEmailsResult()
+{
+    $token = getAccessToken();
+
+    $task_hash = '5e846a1d80d95f66cfb30250a7c1881f';
+
+    $params = [
+        'access_token' => $token,
+    ];
+
+    $options = [
+        CURLOPT_URL => "https://api.snov.io/v2/database-search/prospects/search-emails/result/$task_hash?" . http_build_query($params),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_FOLLOWLOCATION => true,
+    ];
+
+    $ch = curl_init();
+
+    curl_setopt_array($ch, $options);
+
+    $response = json_decode(curl_exec($ch), true);
+
+    curl_close($ch);
+
+    return $response;
+}
+?>
+```
+
+```python
+def search_prospect_emails_result():
+    token = get_access_token()
+
+    task_hash = "5e846a1d80d95f66cfb30250a7c1881f"
+
+    response = requests.get(
+        f"https://api.snov.io/v2/database-search/prospects/search-emails/result/{task_hash}",
+        params={
+            "access_token": token
+        }
+    )
+
+    return response.json()
+```
+
+**Exemplo de resposta**
+
+```json
+
+{
+  "data": {
+    "searching_date": "2026-07-09 10:07:39",
+    "first_name": "John",
+    "last_name": "Doe",
+    "linkedin_url": "https://www.linkedin.com/in/john-doe",
+    "emails": [
+      {
+        "email": "john.doe@snov.io",
+        "smtp_status": "valid"
+      }
+    ]
+  },
+  "meta": {
+    "task_hash": "15e843a82ac180b5369aa97a879ae200"
+  },
+  "links": [],
+  "status": "completed"
+}
+```
+
+**Parâmetros de saída**
+
+| Parâmetro | Descrição |
+| --- | --- |
+| `searching_date` | Data em que a pesquisa de e-mail foi iniciada. |
+| `first_name` | Nome do prospect. |
+| `last_name` | Sobrenome do prospect. |
+| `linkedin_url` | URL do LinkedIn do prospect. |
+| `email` | E-mail do prospect. |
+| `smtp_status` | Pode retornar válido ou desconhecido (também chamado de Não verificável). Você pode aprender mais sobre os status de e-mail aqui . |
+| `task_hash` | Task hash da tarefa de pesquisa que você iniciou. |
+
+**Pesquisar empresas (solicitando resultados)**
+
+> 1 crédito por cada solicitação única se houver pelo menos um registro nos resultados.
+
+`POST` `https://api.snov.io/v2/database-search/companies/start`
+
+**Parâmetros de entrada**
+
+| Parâmetro | Descrição |
+| --- | --- |
+| `filters.company.name.include` | Lista de nomes de empresas que você quer incluir. |
+| `filters.company.name.exclude` | Lista de nomes de empresas que você quer excluir. |
+| `filters.locations.include.locality` | Locais a incluir, ex. Londres Se nenhuma correspondência for encontrada, a API retorna até 15 opções similares. |
+| `filters.locations.include.location_type` | Tipos de local a incluir. Opções possíveis: cidade, estado, país, região, sub-região. |
+| `filters.locations.exclude.locality` | Locais a excluir, ex. Atlanta Se nenhuma correspondência for encontrada, a API retorna até 15 opções similares. |
+| `filters.locations.exclude.location_type` | Tipos de local a excluir. Opções possíveis: cidade, estado, país, região, sub-região. |
+| `filters.company.industries.include` | Lista de indústrias a incluir. Se nenhuma correspondência for encontrada, a API retorna uma lista com indústrias similares. |
+| `filters.company.industries.exclude` | Lista de indústrias a excluir. Se nenhuma correspondência for encontrada, a API retorna uma lista com indústrias similares. |
+| `filters.company.size` | Intervalo de tamanho da empresa. Opções possíveis: Self, 1-10, 11-50, 51-200, 201-500, 501-1000, 1001-5000, 5001-10000, 10001+ |
+| `filters.company.revenue.min` | Receita mínima da empresa. Opções possíveis: 0, 1, 500000, 1000000, 2500000, 5000000, 10000000, 20000000, 50000000, 100000000, 500000000, 1000000000 Atenção: a receita mínima não pode exceder a receita máxima definida. |
+| `filters.company.revenue.max` | Receita máxima da empresa. Opções possíveis: 0, 1, 500000, 1000000, 2500000, 5000000, 10000000, 20000000, 50000000, 100000000, 500000000, 1000000000, 1000000000000 |
+| `filters.company.specialities` | Lista de setores em que a empresa atua. |
+| `filters.company.founded.from` | Ano de fundação da empresa (desde). |
+| `filters.company.founded.till` | Ano de fundação da empresa (até). |
+
+**Paginação**
+
+| Parâmetro | Descrição |
+| --- | --- |
+| `page` | Número da página. A página 1 é retornada por padrão. |
+
+**Exemplos de código**
+
+```php
+<?php
+function companiesSearch()
+{
+    $token = getAccessToken();
+
+    $params = [
+        'access_token' => $token,
+        'page' => 1,
+        'webhook_url' => 'https://hooks.yourdomain.com',
+        'filters' => [
+            'company' => [
+                'name' => [
+                    'include' => ['Snov.io']
+                ],
+            ],
+        ],
+    ];
+
+    $options = [
+        CURLOPT_URL => 'https://api.snov.io/v2/database-search/companies/start?' . http_build_query($params),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => $params,
+        CURLOPT_FOLLOWLOCATION => true,
+    ];
+
+    $ch = curl_init();
+
+    curl_setopt_array($ch, $options);
+
+    $response = json_decode(curl_exec($ch), true);
+
+    curl_close($ch);
+
+    return $response;
+}
+?>
+```
+
+```python
+def companies_search():
+    token = get_access_token()
+
+    params = {
+        "access_token": token,
+        "page": 1,
+        "webhook_url": "https://hooks.yourdomain.com",
+        "filters": {
+            "company": {
+                "name": {
+                    "include": ["Snov.io"]
+                }
+            }
+        }
+    }
+
+    response = requests.post(
+        "https://api.snov.io/v2/database-search/companies/start",
+        json=params,
+    )
+
+    return response.json()
+```
+
+**Exemplo de resposta**
+
+```json
+
+{
+  "data": [],
+  "meta": {
+    "task_hash": "f263aa25a2aae80ddebec51b4ee9be23",
+    "page": 1
+  },
+  "links": {
+    "result": "https://api.snov.io/v2/database-search/companies/result/f263aa25a2aae80ddebec51b4ee9be23"
+  }
+}
+```
+
+**Parâmetros de saída**
+
+| Parâmetro | Descrição |
+| --- | --- |
+| `task_hash` | ID único da tarefa de pesquisa que você iniciou. |
+| `result` | URL de solicitação que você usará para receber os resultados. |
+
+**Pesquisar empresas (obtendo resultados)**
+
+> URL recebida da sua solicitação anterior.
+
+`GET` `https://api.snov.io/v2/database-search/companies/result/{task_hash}`
+
+**Exemplos de código**
+
+```php
+<?php
+function companiesResult()
+{
+    $token = getAccessToken();
+
+    $task_hash = '3384369c16aad810f58609a40ad65089';
+
+    $params = [
+        'access_token' => $token,
+    ];
+
+    $options = [
+        CURLOPT_URL => "https://api.snov.io/v2/database-search/companies/result/$task_hash?" . http_build_query($params),
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_FOLLOWLOCATION => true,
+    ];
+
+    $ch = curl_init();
+
+    curl_setopt_array($ch, $options);
+
+    $response = json_decode(curl_exec($ch), true);
+
+    curl_close($ch);
+
+    return $response;
+}
+?>
+```
+
+```python
+def companies_result():
+    token = get_access_token()
+
+    task_hash = "3384369c16aad810f58609a40ad65089"
+
+    response = requests.get(
+        f"https://api.snov.io/v2/database-search/companies/result/{task_hash}",
+        params={
+            "access_token": token
+        }
+    )
+
+    return response.json()
+```
+
+**Exemplo de resposta**
+
+```json
+
+{
+  "data": {
+    "total": 4328524,
+    "page": 1,
+    "total_pages": 86571,
+    "companies": [
+      {
+        "name": "Snov.io",
+        "domain": "snov.io",
+        "location": "New York, New York, United States",
+        "industry": "Computer Software",
+        "size": "51-200",
+        "revenue": {
+          "min": 20000000,
+          "max": 50000000,
+          "reported": 0
+        },
+        "logo_url": "https://app.snov.io/media/img/companies/5811bb1a217b8c578a604e9e33055a98.jpg"
+      }
+    ]
+  },
+  "meta": {
+    "task_hash": "bbb948e398787454a594f9f03f8f2fd0",
+    "page": 1
+  },
+  "links": [],
+  "status": "completed"
+}
+```
+
+**Parâmetros de saída**
+
+| Parâmetro | Descrição |
+| --- | --- |
+| `total` | Número total de empresas encontradas. |
+| `page` | Número da página. |
+| `total_pages` | O número total de páginas com resultados. |
+| `companies` | Array com as informações sobre a empresa específica. |
+| `name` | Nome da empresa. |
+| `domain` | Domínio da empresa. |
+| `location` | Localização da empresa. |
+| `industry` | Indústria em que a empresa atua. |
+| `size` | Faixa de tamanho da empresa. |
+| `revenue` | Array com a receita da empresa. |
+| `min` | Receita mínima da empresa. |
+| `max` | Receita máxima da empresa |
+| `reported` | Receita que a empresa indicou em seu perfil |
+| `logo_url` | URL do logotipo da empresa. |
+| `task_hash` | ID único da tarefa de pesquisa que você iniciou. |
 
 
 ##### POST Verificar o número de e-mails disponíveis
@@ -8491,6 +9166,39 @@ return json.loads(res.text)
 
 
 ### Webhooks
+
+##### webhooks-description
+
+<!-- endpoint:webhooks-description -->
+
+**Descrição**
+
+| Objeto de webhook | Ação | Quando é ativado |
+| --- | --- | --- |
+| campaign_email | sent | Quando qualquer e-mail é enviado ao destinatário em qualquer campanha de automação |
+| first_sent | Quando o primeiro e-mail é enviado ao destinatário em qualquer campanha de automação |  |
+| opened | Quando um destinatário abre qualquer e-mail de qualquer campanha de automação |  |
+| bounced | Quando um e-mail da campanha é devolvido |  |
+| clicked | Quando um destinatário clicou em um link em um e-mail da campanha |  |
+| campaign_reply | received | Quando o destinatário responde a qualquer e-mail em qualquer uma das campanhas |
+| first_received | Quando o destinatário responde ao e-mail pela primeira vez em qualquer uma das campanhas |  |
+| autoreply_received | Quando você recebe uma resposta automática a um e-mail de campanha |  |
+| campaign_li_reply | received | Quando o destinatário envia uma resposta subsequente pelo LinkedIn — a uma solicitação de conexão, a uma mensagem direta ou a um InMail — em qualquer uma das campanhas |
+| first_received | Quando o destinatário envia sua primeira resposta pelo LinkedIn — a uma solicitação de conexão, a uma mensagem direta ou a um InMail — em qualquer uma das campanhas |  |
+| campaign_li | connection_request_accepted | Quando o destinatário aceita uma solicitação de conexão do LinkedIn enviada a partir de uma campanha |
+| company | found_domains_by_names | Quando você solicita o domínio de uma empresa com base no nome dela |
+| found_company_by_domain | Quando você pesquisa uma empresa pelo seu domínio |  |
+| prospect | found_by_li_url | Quando você solicita as informações do perfil de um cliente potencial com base no respectivo URL do LinkedIn |
+| found_emails_by_name_by_domain | Quando você pesquisa o e-mail de um cliente potencial |  |
+| campaign_finished | Quando uma campanha é concluída para um destinatário (status: Finalizado ) |  |
+| unsubscribed | Quando um destinatário de uma campanha se descadastrou dos seus e-mails |  |
+| found_company_by_domain | Quando você busca prospects pelo domínio da empresa |  |
+| email_verification | verified | Quando você solicita a verificação de e-mail |
+| email | found_emails_by_domain | Quando você busca todos os e-mails por domínio |
+| found_generic_contacts_by_domain | Quando você busca e-mails genéricos por domínio |  |
+| found_prospect_emails | Quando você busca e-mails de prospects |  |
+| database_search | task_result | Quando você solicita uma busca de prospect ou empresa |
+
 
 ##### GET Listar todos os webhooks
 

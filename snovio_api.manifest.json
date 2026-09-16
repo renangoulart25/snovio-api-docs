@@ -7,6 +7,11 @@
       "name": "Pesquisa de domínios",
       "hash": "d33aae74c812c459"
     },
+    "DatabaseSearch": {
+      "verb": "POST",
+      "name": "Pesquisa de Banco de Dados",
+      "hash": "1439bd7e90704bb2"
+    },
     "EmailCount": {
       "verb": "POST",
       "name": "Verificar o número de e-mails disponíveis",
@@ -256,6 +261,11 @@
       "verb": "GET",
       "name": "Verificar saldo do usuário",
       "hash": "c63d67bd41c97ce6"
+    },
+    "webhooks-description": {
+      "verb": null,
+      "name": "webhooks-description",
+      "hash": "b8abb9306e65688a"
     },
     "all-webhooks": {
       "verb": "GET",

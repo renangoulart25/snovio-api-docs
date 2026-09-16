@@ -16,7 +16,7 @@ SOURCE_URL = "https://snov.io/br/api"
 
 GROUPS = [
     ("Localizador de e-mails e enriquecimento",
-     ["DomainSearch2", "EmailCount", "EmailFinder", "CompanyDomainByName",
+     ["DomainSearch2", "DatabaseSearch", "EmailCount", "EmailFinder", "CompanyDomainByName",
       "LiProfilesByUrls", "GetProfileByEmail"]),
     ("Verificador de e-mails", ["EmailVerifier"]),
     ("Conta de e-mail",
@@ -40,7 +40,7 @@ GROUPS = [
       "CreateNewProspectList"]),
     ("CRM", ["GetListOfPipelines", "GetListOfPipelineStages"]),
     ("Conta do usuário", ["CheckUserBalance"]),
-    ("Webhooks", ["all-webhooks", "add-webhooks", "change-webhooks", "delete-webhooks"]),
+    ("Webhooks", ["webhooks-description", "all-webhooks", "add-webhooks", "change-webhooks", "delete-webhooks"]),
 ]
 
 SUBGROUP_IDS = {

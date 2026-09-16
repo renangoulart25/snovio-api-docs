@@ -1,0 +1,291 @@
+{
+  "source": "https://snov.io/br/api",
+  "generated": "2026-09-16",
+  "endpoints": {
+    "DomainSearch2": {
+      "verb": "POST",
+      "name": "Pesquisa de domínios",
+      "hash": "d33aae74c812c459"
+    },
+    "EmailCount": {
+      "verb": "POST",
+      "name": "Verificar o número de e-mails disponíveis",
+      "hash": "4a2fc09bb362f2ff"
+    },
+    "EmailFinder": {
+      "verb": "POST",
+      "name": "Encontrar e-mails a partir do nome e domínio",
+      "hash": "5df1c8158aa2aa32"
+    },
+    "CompanyDomainByName": {
+      "verb": "POST",
+      "name": "Encontrar domínio a partir do nome da empresa",
+      "hash": "45e2362e73003b37"
+    },
+    "LiProfilesByUrls": {
+      "verb": "POST",
+      "name": "Obter informações do perfil do LinkedIn a partir de URLs",
+      "hash": "a92988e55f844b95"
+    },
+    "GetProfileByEmail": {
+      "verb": "POST",
+      "name": "Preencher o perfil da pessoa a partir do e-mail",
+      "hash": "e7b9069c53d5fb9e"
+    },
+    "EmailVerifier": {
+      "verb": "POST",
+      "name": "Verificador de e-mails",
+      "hash": "006bb323d0547dd6"
+    },
+    "AddEmailAccount": {
+      "verb": "POST",
+      "name": "Adicionar nova conta de e-mail",
+      "hash": "3bf1bfbe767b111d"
+    },
+    "UpdateEmailAccount": {
+      "verb": "PATCH",
+      "name": "Atualizar conta de e-mail",
+      "hash": "2b091a46ff4523c4"
+    },
+    "CheckSenderStatus": {
+      "verb": "GET",
+      "name": "Verificar status SMTP/IMAP do remetente",
+      "hash": "309580e74a4f9737"
+    },
+    "GetListOfEmailAccounts": {
+      "verb": "GET",
+      "name": "Obter lista de todas as contas de e-mail",
+      "hash": "231e7603f79979b4"
+    },
+    "CreateWarmUp": {
+      "verb": "POST",
+      "name": "Criar campanha de aquecimento",
+      "hash": "9b71d19a35d7fc80"
+    },
+    "GetWarmUpList": {
+      "verb": "GET",
+      "name": "Obter lista de campanhas de aquecimento",
+      "hash": "dbc8294ac78d66a3"
+    },
+    "GetWarmUpById": {
+      "verb": "GET",
+      "name": "Obter informações da campanha de aquecimento",
+      "hash": "4f101cb96f99e75e"
+    },
+    "UpdateWarmUp": {
+      "verb": "PATCH",
+      "name": "Atualizar campanha de aquecimento",
+      "hash": "9aeab2506b9701eb"
+    },
+    "DeleteWarmUp": {
+      "verb": "DELETE",
+      "name": "Excluir campanha de aquecimento",
+      "hash": "8a6d4f798426ddfd"
+    },
+    "GetWarmUpStatistics": {
+      "verb": "GET",
+      "name": "Obter estatísticas de aquecimento",
+      "hash": "28353ffe1851086b"
+    },
+    "UserCampaigns": {
+      "verb": "GET",
+      "name": "Ver todas as campanhas",
+      "hash": "d8f641510cdcc098"
+    },
+    "CreateCampaign": {
+      "verb": "POST",
+      "name": "Criar campanha",
+      "hash": "b2aaf9b259f32ec1"
+    },
+    "GetCampaignInfo": {
+      "verb": "GET",
+      "name": "Obter informações da campanha",
+      "hash": "ce1215aef0335231"
+    },
+    "UpdateCampaign": {
+      "verb": "PATCH",
+      "name": "Atualizar campanha",
+      "hash": "0b9ea2514a6517e0"
+    },
+    "ChangeCampaignState": {
+      "verb": "POST",
+      "name": "Alterar estado da campanha",
+      "hash": "f1af145c0fb9b62f"
+    },
+    "DeleteCampaign": {
+      "verb": "DELETE",
+      "name": "Excluir campanha",
+      "hash": "15fe03f189892771"
+    },
+    "GetListOfSchedules": {
+      "verb": "GET",
+      "name": "Ver todos os agendamentos",
+      "hash": "57e694fb2934cd05"
+    },
+    "CreateEmailStepContent": {
+      "verb": "POST",
+      "name": "Criar conteúdo de etapa de e-mail",
+      "hash": "1ef27b36db30e4de"
+    },
+    "GetEmailStepContent": {
+      "verb": "GET",
+      "name": "Obter conteúdo de etapa de e-mail",
+      "hash": "9c7772abf6743391"
+    },
+    "UpdateEmailStepContent": {
+      "verb": "PATCH",
+      "name": "Atualizar conteúdo de etapa de e-mail",
+      "hash": "2d87c4de8e525f16"
+    },
+    "DeleteEmailStepContent": {
+      "verb": "DELETE",
+      "name": "Excluir conteúdo de etapa de e-mail",
+      "hash": "733e512146f58734"
+    },
+    "CheckRecipientStatus": {
+      "verb": "GET",
+      "name": "Verificar status do destinatário",
+      "hash": "0e93a521b47e9b95"
+    },
+    "ChangerecipientsStatus": {
+      "verb": "POST",
+      "name": "Alterar status do destinatário",
+      "hash": "4104b5d66280161c"
+    },
+    "ListOfFinishedProspects": {
+      "verb": "GET",
+      "name": "Ver lista de clientes potenciais concluídos",
+      "hash": "471b194d06fd7d0b"
+    },
+    "AddTODoNotEmailList": {
+      "verb": "POST",
+      "name": "Adicionar à Lista de e-mails a não enviar",
+      "hash": "4489109b62862d3d"
+    },
+    "GetListOfDNELists": {
+      "verb": "GET",
+      "name": "Ver todas as Listas de não envio de e-mails",
+      "hash": "aae2d9d57e73e646"
+    },
+    "GetcampaignAnalytics": {
+      "verb": "GET",
+      "name": "Obter análises de campanha",
+      "hash": "c327b1e6c89d7d0e"
+    },
+    "ViewcampaignProgress": {
+      "verb": "GET",
+      "name": "Ver andamento da campanha",
+      "hash": "0141bc486fe6ef05"
+    },
+    "GetCampaignRecipientsActivityReport": {
+      "verb": "GET",
+      "name": "Obter relatório de atividade dos destinatários da campanha",
+      "hash": "f7bb3e7f2cd9ba70"
+    },
+    "EmailsSent": {
+      "verb": "GET",
+      "name": "Ver emails enviados",
+      "hash": "8d83d9f64b8192ce"
+    },
+    "OpenEmails": {
+      "verb": "GET",
+      "name": "Ver informações sobre aberturas na campanha",
+      "hash": "23af3aa083e49ad4"
+    },
+    "EmailsClicked": {
+      "verb": "GET",
+      "name": "Ver cliques no link",
+      "hash": "aba30c8ac7b9c4d6"
+    },
+    "SeeAllCampaignReplies": {
+      "verb": "GET",
+      "name": "Ver todas as respostas da campanha",
+      "hash": "81f2cf1f936ea062"
+    },
+    "CampaignReplies": {
+      "verb": "GET",
+      "name": "Ver as respostas de email da campanha",
+      "hash": "2041056593e6a5cc"
+    },
+    "AddProspectToList": {
+      "verb": "POST",
+      "name": "Adicionar cliente potencial à lista",
+      "hash": "ed366743f685a776"
+    },
+    "FindProspectbyID": {
+      "verb": "POST",
+      "name": "Localizar cliente potencial por ID",
+      "hash": "51b44bca6f7945ff"
+    },
+    "FindProspectbyEmail": {
+      "verb": "POST",
+      "name": "Localizar cliente potencial por email",
+      "hash": "6c6375b8e9991f6f"
+    },
+    "FindProspectsCustomFields": {
+      "verb": "GET",
+      "name": "Encontrar os campos personalizados do cliente potencial",
+      "hash": "b537be83b0a732a2"
+    },
+    "UserLists": {
+      "verb": "GET",
+      "name": "Ver listas do usuário",
+      "hash": "4e03692046e9c5ec"
+    },
+    "ViewProspectsInList": {
+      "verb": "POST",
+      "name": "Ver clientes potenciais na lista",
+      "hash": "fda878b2a5d50462"
+    },
+    "CreateNewProspectList": {
+      "verb": "POST",
+      "name": "Criar nova lista de clientes potenciais",
+      "hash": "bd98283757449f56"
+    },
+    "GetListOfPipelines": {
+      "verb": "GET",
+      "name": "Obter lista de pipelines",
+      "hash": "5edc538756d3a81a"
+    },
+    "GetListOfPipelineStages": {
+      "verb": "GET",
+      "name": "Obter lista de etapas do pipeline",
+      "hash": "3b6a18ca1dd90524"
+    },
+    "CheckUserBalance": {
+      "verb": "GET",
+      "name": "Verificar saldo do usuário",
+      "hash": "c63d67bd41c97ce6"
+    },
+    "all-webhooks": {
+      "verb": "GET",
+      "name": "Listar todos os webhooks",
+      "hash": "1e4268c8a5e26300"
+    },
+    "add-webhooks": {
+      "verb": "POST",
+      "name": "Adicionar webhook",
+      "hash": "4b579a3fbfec26a2"
+    },
+    "change-webhooks": {
+      "verb": "PUT",
+      "name": "Alterar status de webhook",
+      "hash": "b97fcaeaace01e85"
+    },
+    "delete-webhooks": {
+      "verb": "DELETE",
+      "name": "Excluir um webhook",
+      "hash": "ceef4150fefcb237"
+    },
+    "ref:Currencies": {
+      "verb": null,
+      "name": "Moedas",
+      "hash": "901a1ccfd1a45526"
+    },
+    "ref:Timezones": {
+      "verb": null,
+      "name": "Fusos horários",
+      "hash": "e4b22b5e44107b3a"
+    }
+  }
+}

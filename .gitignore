@@ -2,3 +2,7 @@ __pycache__/
 *.pyc
 .DS_Store
 Thumbs.db
+
+# Graphify temporaries and cache
+graphify-out/.*
+graphify-out/cache/

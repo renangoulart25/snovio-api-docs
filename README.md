@@ -57,13 +57,7 @@ py snovio_sync_standalone.py
 To update the documentation and regenerate the interactive knowledge graph:
 
 ```powershell
-.\update_graph.ps1
-```
-
-Or run and immediately open the interactive graph in your default browser:
-
-```powershell
-.\update_graph.ps1 -OpenBrowser
+py run_graphify.py
 ```
 
 Generated Graph Artifacts:

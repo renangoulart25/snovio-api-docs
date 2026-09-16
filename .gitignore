@@ -6,3 +6,6 @@ Thumbs.db
 # Graphify temporaries and cache
 graphify-out/.*
 graphify-out/cache/
+
+# Local utility scripts
+*.ps1

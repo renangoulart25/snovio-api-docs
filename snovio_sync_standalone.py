@@ -364,6 +364,13 @@ def main(argv=None):
         MANIFEST_PATH.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
         if changed and not first:
             write_changelog(add, rem, mod, old, manifest)
+        # Gera/atualiza especificação OpenAPI 3.1
+        try:
+            from generate_openapi import generate as gen_openapi
+            print("Gerando OpenAPI spec...")
+            gen_openapi()
+        except Exception as e:
+            print(f"Aviso: falha ao gerar OpenAPI: {e}", file=sys.stderr)
     return 10 if changed else 0
 
 

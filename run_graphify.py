@@ -196,6 +196,70 @@ hyperedges.append({
     'source_file': str(root / 'docs/05_campanhas-multicanal.md')
 })
 
+# --- OpenAPI Spec Ingestion ---
+openapi_file = root / "snovio_openapi.yaml"
+openapi_json_file = root / "snovio_openapi.json"
+if openapi_json_file.exists():
+    try:
+        oas = json.loads(openapi_json_file.read_text(encoding='utf-8'))
+        oas_node_id = 'openapi_spec'
+        nodes.append({
+            'id': oas_node_id,
+            'label': f"OpenAPI Spec v{oas.get('info',{}).get('version','')}",
+            'file_type': 'document',
+            'file_path': str(openapi_json_file),
+            'source_file': str(openapi_json_file),
+            'context': oas.get('info', {}).get('description', ''),
+        })
+        # Mapeia tags → módulos existentes
+        tag_to_module = {}
+        for tag_info in oas.get('tags', []):
+            tag_name = tag_info['name']
+            # Procura módulo correspondente pelo nome parcial
+            for mod_key, mod_nid in module_node_ids.items():
+                if any(part in mod_key.lower() for part in tag_name.lower().split()):
+                    tag_to_module[tag_name] = mod_nid
+                    break
+
+        for path, methods in oas.get('paths', {}).items():
+            for verb, op in methods.items():
+                op_id = op.get('operationId', f'{verb}_{path}')
+                op_node_id = f'oas_op_{re.sub(r"[^a-z0-9_]", "_", op_id.lower())}'
+                op_label = f"{verb.upper()} {op.get('summary', op_id)}"
+                nodes.append({
+                    'id': op_node_id,
+                    'label': op_label,
+                    'file_type': 'code',
+                    'file_path': str(openapi_json_file),
+                    'source_file': str(openapi_json_file),
+                    'context': f"{verb.upper()} {path} | credits: {op.get('x-credits', 'N/A')} | operationId: {op_id}",
+                })
+                # Aresta: operação → spec
+                edges.append({
+                    'source': op_node_id,
+                    'target': oas_node_id,
+                    'relation': 'defined_in',
+                    'confidence': 'EXTRACTED',
+                    'confidence_score': 1.0,
+                    'source_file': str(openapi_json_file),
+                })
+                # Aresta: operação → módulo doc correspondente
+                for tag in op.get('tags', []):
+                    if tag in tag_to_module:
+                        edges.append({
+                            'source': op_node_id,
+                            'target': tag_to_module[tag],
+                            'relation': 'documented_in',
+                            'confidence': 'EXTRACTED',
+                            'confidence_score': 0.95,
+                            'source_file': str(openapi_json_file),
+                        })
+        print(f"  OpenAPI: injetados nós e arestas de {len(oas.get('paths', {}))} paths.")
+    except Exception as e:
+        print(f"  Aviso: falha ao ingerir OpenAPI: {e}")
+elif openapi_file.exists():
+    print(f"  Aviso: snovio_openapi.json não encontrado. Execute: py generate_openapi.py --json")
+
 seen_nodes = set()
 dedup_nodes = []
 for n in nodes:
